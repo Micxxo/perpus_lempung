@@ -12,14 +12,20 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                'instrument-sans': ['InstrumentSans', 'sans-serif'],
             },
             boxShadow: {
-                'blur-sm': '0px 0px 2px 0px rgba(0, 0, 0, 0.25)'
+                'blur-sm': '0px 0px 2px 0px rgba(0, 0, 0, 0.25)',
+                'book-shadow': '8px 7px 4px 0px rgba(0, 0, 0, 0.25)'
             },
-            backgroundColor: {
-                background: '#F8F8F8',
-                primary: '#F9C508'
+            colors: {
+                background: "hsl(var(--background))",
+                secondary: "hsl(var(--secondary))",
+                accent: "hsl(var(--accent))",
+                primary: {
+                    DEFAULT: "hsl(var(--primary))",
+                    foreground: "hsl(var(--primary-foreground))",
+                  },
             }
         },
     },

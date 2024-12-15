@@ -1,3 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    :root {
+        --background: 0 0% 97%;
+        --primary: 47 95% 50%;
+        --primary-foreground: 0 0% 2%;
+        --secondary: 0 0% 94%;
+        --accent: 0 16% 41%;
+    }
+}
+
+@font-face {
+    font-family: "InstrumentSans";
+    src: url("/fonts/InstrumentSans-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "InstrumentSans";
+    src: url("../../public/fonts/InstrumentSans-Medium.ttf") format("truetype");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "InstrumentSans";
+    src: url("../../public/fonts/InstrumentSans-SemiBold.ttf")
+        format("truetype");
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "InstrumentSans";
+    src: url("../../public/fonts/InstrumentSans-Bold.ttf") format("truetype");
+    font-weight: 700;
+}

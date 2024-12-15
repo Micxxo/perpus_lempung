@@ -6,29 +6,27 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class PrimaryButton extends Component
+class Badge extends Component
 {
-    public $type;
-    public $onClick;
+    public $variant;
+    public $class;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($type = 'button', $onClick = null)
+    public function __construct($variant = "primary", $class = "")
     {
-        $this->type = $type;
-        $this->onClick = $onClick;
+        $this->variant = $variant;
+        $this->class = $class;
     }
-
     /**
      * Get the view / contents that represent the component.
      */
     public function render(): View|Closure|string
     {
-        return view('components.primary-button', [
-            'type' => $this->type,
-            'onClick' => $this->onClick,
-
+        return view('components.badge', [
+            'variant' => $this->variant,
+            'class' => $this->class,
         ]);
     }
 }
