@@ -15,7 +15,8 @@ export default {
                 'instrument-sans': ['InstrumentSans', 'sans-serif'],
             },
             boxShadow: {
-                'blur-sm': '0px 0px 2px 0px rgba(0, 0, 0, 0.25)',
+                'blur-xs': '0px 0px 2px 0px rgba(0, 0, 0, 0.25)',
+                'blur-sm': '0px 0px 4px 0px rgba(0, 0, 0, 0.25)',
                 'book-shadow': '8px 7px 4px 0px rgba(0, 0, 0, 0.25)'
             },
             colors: {

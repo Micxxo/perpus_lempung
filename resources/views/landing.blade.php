@@ -60,11 +60,13 @@
                         <input type="text" name="search" placeholder="Cari judul buku atau penerbit"
                             class="border border-[#B8B8B8] px-3 py-2 rounded-md w-full md:w-[376px]" x-ref="searchInput"
                             x-model="$store.dataStore.searchQuery">
+
                         <button type="submit"
                             class="border border-black rounded-lg bg-transparent px-8 py-2 w-full md:w-fit">
                             Cari
                         </button>
                     </form>
+
                 </div>
                 <div x-data x-init="$store.dataStore.fetch()" class="flex-1">
                     {{-- map data buku disini  --}}
@@ -156,7 +158,7 @@
                 try {
                     const response = await fetch(`/books${queryParam}`);
                     const data = await response.json();
-                    this.books = data;
+                    this.books = data.data;
                 } catch (error) {
                     console.error("Error fetching books:", error);
                 } finally {

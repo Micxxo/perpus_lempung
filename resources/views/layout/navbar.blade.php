@@ -1,4 +1,4 @@
-<nav class="flex items-center w-full justify-between rounded-full shadow-blur-sm bg-white px-7 py-2 ">
+<nav class="flex items-center w-full justify-between rounded-full shadow-blur-xs bg-white px-7 py-2 ">
 
     {{-- fixed z-10 top-0 left-0 right-0 mx-auto --}}
     <a href="/">

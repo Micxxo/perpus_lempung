@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('content')
-    <section class="px-5 md:px-8 py-3 md:py-6 flex flex-col md:flex-row items-center h-full">
+    <section class="px-5 md:px-8 py-3 md:py-6 flex flex-col md:flex-row items-center h-full relative">
         <div class="w-full md:w-[45%] h-full flex flex-col bg-secondary rounded-2xl pt-20 overflow-y-auto">
             <div class="mx-auto w-fit">
                 <img src="{{ asset('images/logo.webp') }}" alt="logo">
@@ -30,5 +30,19 @@
             <h1 class="text-4xl">Perpustakaan <br>Lempung</h1>
         </div>
 
+
+        @if (session('success'))
+            <div class="absolute bottom-10 right-14 flex flex-col gap-y-5">
+                <x-success-alert> {{ session('success') }}</x-success-alert>
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="absolute bottom-10 right-14 flex flex-col gap-y-5">
+                @foreach ($errors->all() as $index => $error)
+                    <x-error-alert>{{ $error }}</x-error-alert>
+                @endforeach
+            </div>
+        @endif
     </section>
 @endsection

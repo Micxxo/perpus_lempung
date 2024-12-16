@@ -20,7 +20,11 @@ class BookController extends Controller
             })
             ->get();
 
+        $message = $books->isEmpty() ? 'Buku tidak ditemukan' : 'Berhasil memuat data buku';
 
-        return response()->json($books);
+        return response()->json([
+            'message' => $message,
+            'data' => $books,
+        ]);
     }
 }
