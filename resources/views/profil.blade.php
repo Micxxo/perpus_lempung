@@ -59,7 +59,7 @@
                 class="w-full h-full object-cover rounded-2xl" />
             <div class="absolute inset-0 flex justify-center items-center">
                 @auth
-                    @if (auth()->id() === 1 && auth()->user()->is_member)
+                    @if (auth()->user()->role_id === 1 && !auth()->user()->is_member)
                         <x-modal title=" ">
                             <x-slot name="buttonSlot">
                                 <button class="bg-transparent rounded-xl border-2 border-primary text-white py-2 px-8">
@@ -88,6 +88,8 @@
                                 </div>
                             </x-slot>
                         </x-modal>
+                    @else
+                        <h1 class="text-white font-medium">Anda merupakan member</h1>
                     @endif
                 @endauth
 
