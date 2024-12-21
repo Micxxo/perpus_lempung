@@ -40,15 +40,17 @@
 
         <div class="w-full h-[1px] bg-black/10"></div>
 
-        <button class="flex items-center gap-2 rounded-lg"
-            :class="minimize ? 'py-3 flex items-center justify-center' : 'px-4 py-3'"
-            onclick="window.location='{{ route('buku') }}'">
-            <span class="material-symbols-outlined text-red-600">
-                logout
-            </span>
-            <p x-show="!minimize" class="text-sm font-medium text-red-600">
-                Logout
-            </p>
-        </button>
+        <form id="logoutForm" action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="flex items-center gap-2 rounded-lg"
+                :class="minimize ? 'py-3 flex items-center justify-center' : 'px-4 py-3'">
+                <span class="material-symbols-outlined text-red-600">
+                    logout
+                </span>
+                <p x-show="!minimize" class="text-sm font-medium text-red-600">
+                    Logout
+                </p>
+            </button>
+        </form>
     </div>
 </div>

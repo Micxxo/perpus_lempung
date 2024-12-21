@@ -146,6 +146,7 @@
             },
         };
     }
+
     document.addEventListener("alpine:init", () => {
         Alpine.store("dataStore", {
             books: [],

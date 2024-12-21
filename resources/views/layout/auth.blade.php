@@ -31,18 +31,20 @@
         </div>
 
 
-        @if (session('success'))
-            <div class="absolute bottom-10 right-14 flex flex-col gap-y-5">
-                <x-success-alert> {{ session('success') }}</x-success-alert>
+        <div x-data="{ showSuccess: {{ session('success') ? 'true' : 'false' }}, showErrors: {{ $errors->any() ? 'true' : 'false' }} }" x-init="setTimeout(() => {
+            showSuccess = false;
+            showErrors = false;
+        }, 2000)">
+            <div x-show="showSuccess" class="absolute bottom-10 right-14 flex flex-col gap-y-5">
+                <x-success-alert>{{ session('success') }}</x-success-alert>
             </div>
-        @endif
 
-        @if ($errors->any())
-            <div class="absolute bottom-10 right-14 flex flex-col gap-y-5">
+            <div x-show="showErrors" class="absolute bottom-10 right-14 flex flex-col gap-y-5">
                 @foreach ($errors->all() as $index => $error)
                     <x-error-alert>{{ $error }}</x-error-alert>
                 @endforeach
             </div>
-        @endif
+        </div>
+
     </section>
 @endsection

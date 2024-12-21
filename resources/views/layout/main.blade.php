@@ -12,6 +12,40 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
+<style>
+    [x-cloak] {
+        display: none !important;
+    }
+
+    .custom-scrollbar {
+        width: 100%;
+        height: 300px;
+        overflow-y: scroll;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: #E5E5E5;
+        border-radius: 10px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background-color: #45a049;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background-color: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-corner {
+        background-color: #f1f1f1;
+    }
+</style>
+
 <body class="font-instrument-sans h-screen">
     <main class="h-screen max-w-screen-2xl mx-auto bg-background">
         @yield('content')

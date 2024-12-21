@@ -8,6 +8,18 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    public function showLoginPage()
+    {
+        return view('login');
+    }
+
+    public function showRegisterPage()
+    {
+        return view('register');
+    }
+
+
+
     function registerMember(Request $request)
     {
 
@@ -22,6 +34,7 @@ class AuthController extends Controller
         $user->username = $request->username;
         $user->email = $request->email;
         $user->role_id = 1;
+        $user->is_member = 0;
         $user->password = bcrypt($request->password);
         $user->save();
 
@@ -44,5 +57,14 @@ class AuthController extends Controller
         return back()->withErrors([
             'email' => 'Email atau password salah.',
         ])->onlyInput('email');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login')->with('success', 'Logout berhasil!');
     }
 }
