@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('title', 'Perpustakaan Lempung')</title>
+    <title>@yield('title', 'Perpustakaan Lempuing')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     {{-- font  --}}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
 </head>
 
 <style>
@@ -46,7 +48,7 @@
     }
 </style>
 
-<body class="font-instrument-sans h-screen">
+<body class="font-instrument-sans h-screen overflow-x-hidden">
     <main class="h-screen max-w-screen-2xl mx-auto bg-background">
         @yield('content')
     </main>

@@ -11,17 +11,19 @@ class modal extends Component
     public $buttonSlot;
     public $contentSlot;
     public $class;
+    public $buttonContainerClass;
     public $title;
 
 
     /**
      * Create a new component instance.
      */
-    public function __construct($buttonSlot = null, $contentSlot = null, $class = "", $title = "")
+    public function __construct($buttonSlot = null, $contentSlot = null, $class = "", $title = "", $buttonContainerClass = "")
     {
         $this->buttonSlot = $buttonSlot;
         $this->contentSlot = $contentSlot;
         $this->class = $class;
+        $this->buttonContainerClass = $buttonContainerClass;
         $this->title = $title;
     }
 
@@ -34,6 +36,7 @@ class modal extends Component
             'buttonSlot' => $this->buttonSlot,
             'contentSlot' => $this->contentSlot,
             'class' => $this->class,
+            'buttonContainerClass' => $this->buttonContainerClass,
             'title' => $this->title,
         ]);
     }

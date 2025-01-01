@@ -17,7 +17,7 @@
             </div>
 
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2">
-                <p class="font-semibold text-4xl text-white text-center">Perpustakaan <br> Lempung</p>
+                <p class="font-semibold text-4xl text-white text-center">Perpustakaan <br> Lempuing</p>
             </div>
 
             <!-- Navigation Buttons -->
@@ -71,11 +71,11 @@
                 <div x-data x-init="$store.dataStore.fetch()" class="flex-1">
                     {{-- map data buku disini  --}}
                     <template x-if="$store.dataStore.books.length > 0 && !$store.dataStore.loading">
-                        <div class="flex items-center gap-x-28 gap-y-5 flex-wrap mt-5">
+                        <div class="grid grid-cols-3 gap-x-5 gap-y-5 mt-5">
                             <template x-for="book in $store.dataStore.books.slice(0, 6)" :key="book.id">
-                                <div class="flex gap-5 p-2">
-                                    <div class="flex-1 h-full">
-                                        <img :src="book.image" alt="Book Imgae"
+                                <div class="flex gap-10 p-2">
+                                    <div class="h-full">
+                                        <img :src="`{{ asset('storage') }}/${book.image}`" alt="Book Imgae"
                                             class="w-[200px] h-[257px] object-cover shadow-book-shadow rounded-md" />
                                     </div>
                                     <div class="mt-4">

@@ -27,7 +27,7 @@
             <div>
                 <img src="{{ asset('images/logo.webp') }}" alt="logo">
             </div>
-            <h1 class="text-4xl">Perpustakaan <br>Lempung</h1>
+            <h1 class="text-4xl">Perpustakaan <br>Lempuing</h1>
         </div>
 
 

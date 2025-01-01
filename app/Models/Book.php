@@ -11,4 +11,9 @@ class Book extends Model
     {
         $query->where('name', 'like', '%' . request('search') . '%');
     }
+
+    public function loans()
+    {
+        return $this->hasMany(Loan::class);
+    }
 }

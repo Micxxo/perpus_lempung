@@ -65,7 +65,6 @@
                         class="px-8 py-1.5 bg-primary text-black font-semibold rounded-md">Reset</button>
                 @endif
             </form>
-
             @auth
                 @if (Auth::user()->role_id === 2)
                     <x-modal title="Tambah Buku">

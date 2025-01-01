@@ -1,6 +1,6 @@
 <div x-data="{ openModal: false }" class="relative">
     <!-- Trigger Button -->
-    <div x-on:click="openModal = !openModal" class="cursor-pointer">
+    <div x-on:click="openModal = !openModal" class="cursor-pointer w-fit {{ $buttonContainerClass }}">
         {!! $buttonSlot ?? '<button class="p-1 bg-primary text-black rounded-md">Open Modal</button>' !!}
     </div>
 

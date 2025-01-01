@@ -9,15 +9,11 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('fine_id')->constrained('fines')->onDelete('cascade');
-            $table->foreignId('member_id')->constrained('members')->onDelete('cascade');
-            $table->foreignId('loan_id')->constrained('loans')->onDelete('cascade');
-            $table->foreignId('visit_id')->constrained('visits')->onDelete('cascade');
-            $table->text('description')->nullable();
+            $table->string('report_type');
             $table->timestamps();
         });
     }
