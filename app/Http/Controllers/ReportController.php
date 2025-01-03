@@ -29,6 +29,7 @@ class ReportController extends Controller
             ->when($reportType, function ($query, $reportType) {
                 return $query->where('report_type', $reportType);
             })
+            ->orderBy('created_at', 'desc')
             ->paginate(15);
 
         return view('reports.index', compact(['reports', 'reportSearch', 'reportType']));

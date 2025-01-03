@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->after('report_type');
-            $table->string('report_type');
-            $table->foreignId('member_id')->constrained('members')->onDelete('cascade');
+            $table->string('title');
+            $table->enum('report_type', ['visits', 'loans', 'fines', 'members']);
+            $table->foreignId('reporter_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

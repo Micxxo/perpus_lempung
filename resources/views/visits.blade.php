@@ -130,113 +130,115 @@
                     </div>
                 </x-visit-error-state>
             </div>
+        @else
+            <div class="flex-1 w-full mt-5 overflow-y-auto custom-scrollbar pr-2">
+                <table class="w-full rounded-md">
+                    <thead class="bg-gray-200 rounded-md w-full sticky top-0 z-10">
+                        <th class="font-semibold border-r border-gray-300 text-left py-2 px-4 rounded-tl-md">No
+                        </th>
+                        <th class="font-semibold border-r border-gray-300 text-left py-2 px-4">Nama pengunjung</th>
+                        <th class="font-semibold border-r border-gray-300 text-left py-2 px-4 ">Tanggal kedatangan
+                        </th>
+                        <th class="font-semibold text-left py-2 px-4 border-r border-gray-300">Deskripsi</th>
+                        <th class="font-semibold text-left py-2 px-4 rounded-tr-md">Aksi</th>
+                    </thead>
+                    <tbody>
+                        @foreach ($visits as $visit)
+                            <tr class="border border-gray-100 even:bg-gray-50">
+                                <td class="px-4 py-3 text-left border-r border-gray-200 ">
+                                    <p>{{ $loop->iteration }}</p>
+                                </td>
+                                <td class="px-4 py-3 text-left border-r border-gray-200 ">
+                                    <p>{{ $visit->name }}</p>
+                                </td>
+                                <td class="px-4 py-3 text-left border-r border-gray-200 ">
+                                    <p>{{ $visit->date }}</p>
+                                </td>
+                                <td class="px-4 py-3 text-left border-r border-gray-200 ">
+                                    <p>{{ $visit->description ? $visit->description : '-' }}</p>
+                                </td>
+                                <td class="px-4 py-3 text-left border-r border-gray-200">
+                                    <div class="flex items-center gap-2">
+                                        {{-- edit  --}}
+                                        <x-modal title="Edit Data Peminjam">
+                                            <x-slot name="buttonSlot">
+                                                <button>
+                                                    <span class="material-symbols-outlined">
+                                                        edit
+                                                    </span>
+                                                </button>
+                                            </x-slot>
+
+                                            <x-slot name="contentSlot">
+                                                <form action="{{ route('kunjungan.update') }}" method="POST"
+                                                    class="w-full h-full md:h-[250px] flex flex-col gap-y-3">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <input type="hidden" name="visit_id" value="{{ $visit->id }}">
+                                                    <input type="text" placeholder="Nama pengunjung"
+                                                        name="visiters_name" required
+                                                        class="px-1 py-2 rounded-md border border-black/30 w-full"
+                                                        value="{{ $visit->name }}" />
+
+                                                    <input type="date" name="visit_date" required
+                                                        value="{{ $visit->date }}"
+                                                        class="px-1 py-2 rounded-md border border-black/30 w-full" />
+
+                                                    <textarea name="visit_desc" placeholder="Deskripsi atau Catatan"
+                                                        class="rounded-md border px-1 py-2 border-black/30 w-full flex-1 text-left">{{ old('visit_desc', $visit->description) }}</textarea>
+
+
+                                                    <div class="w-full flex items-center justify-end">
+                                                        <button type="submit"
+                                                            class="px-2 py-1 bg-primary rounded-md">Tambah</button>
+                                                    </div>
+                                                </form>
+                                            </x-slot>
+
+                                        </x-modal>
+
+                                        {{-- delete  --}}
+                                        <x-modal title="Hapus Data Peminjam">
+                                            <x-slot name="buttonSlot">
+                                                <button>
+                                                    <span class="material-symbols-outlined text-red-600">
+                                                        delete
+                                                    </span>
+                                                </button>
+                                            </x-slot>
+
+                                            <x-slot name="contentSlot">
+                                                <div class="w-[400px]">
+                                                    <p class="text-sm font-medium">Apakah anda yakin akan menghapus
+                                                        data kunjungan <span class="font-bold">{{ $visit->name }}</span>?
+                                                        Data
+                                                        yang dihapus akan hilang dari list</p>
+
+                                                    <form action="{{ route('kunjungan.destroy', $visit->id) }}"
+                                                        method="POST" class="mt-3 w-full flex items-center justify-end"
+                                                        id="deleteVisitForm">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="bg-red-600 text-white !px-3 !py-1 rounded-md">
+                                                            <p class="text-sm truncate">Hapus</p>
+                                                    </form>
+                                                    </button>
+                                                </div>
+                                            </x-slot>
+                                        </x-modal>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-8">
+                {{ $visits->appends(request()->except('page'))->links('vendor.pagination.default') }} </div>
         @endif
 
-        <div class="flex-1 w-full mt-5 overflow-y-auto custom-scrollbar pr-2">
-            <table class="w-full rounded-md">
-                <thead class="bg-gray-200 rounded-md w-full sticky top-0 z-10">
-                    <th class="font-semibold border-r border-gray-300 text-left py-2 px-4 rounded-tl-md">No
-                    </th>
-                    <th class="font-semibold border-r border-gray-300 text-left py-2 px-4">Nama pengunjung</th>
-                    <th class="font-semibold border-r border-gray-300 text-left py-2 px-4 ">Tanggal kedatangan
-                    </th>
-                    <th class="font-semibold text-left py-2 px-4 border-r border-gray-300">Deskripsi</th>
-                    <th class="font-semibold text-left py-2 px-4 rounded-tr-md">Aksi</th>
-                </thead>
-                <tbody>
-                    @foreach ($visits as $visit)
-                        <tr class="border border-gray-100 even:bg-gray-50">
-                            <td class="px-4 py-3 text-left border-r border-gray-200 ">
-                                <p>{{ $loop->iteration }}</p>
-                            </td>
-                            <td class="px-4 py-3 text-left border-r border-gray-200 ">
-                                <p>{{ $visit->name }}</p>
-                            </td>
-                            <td class="px-4 py-3 text-left border-r border-gray-200 ">
-                                <p>{{ $visit->date }}</p>
-                            </td>
-                            <td class="px-4 py-3 text-left border-r border-gray-200 ">
-                                <p>{{ $visit->description ? $visit->description : '-' }}</p>
-                            </td>
-                            <td class="px-4 py-3 text-left border-r border-gray-200">
-                                <div class="flex items-center gap-2">
-                                    {{-- edit  --}}
-                                    <x-modal title="Edit Data Peminjam">
-                                        <x-slot name="buttonSlot">
-                                            <button>
-                                                <span class="material-symbols-outlined">
-                                                    edit
-                                                </span>
-                                            </button>
-                                        </x-slot>
-
-                                        <x-slot name="contentSlot">
-                                            <form action="{{ route('kunjungan.update') }}" method="POST"
-                                                class="w-full h-full md:h-[250px] flex flex-col gap-y-3">
-                                                @csrf
-                                                @method('PUT')
-                                                <input type="hidden" name="visit_id" value="{{ $visit->id }}">
-                                                <input type="text" placeholder="Nama pengunjung" name="visiters_name"
-                                                    required class="px-1 py-2 rounded-md border border-black/30 w-full"
-                                                    value="{{ $visit->name }}" />
-
-                                                <input type="date" name="visit_date" required
-                                                    value="{{ $visit->date }}"
-                                                    class="px-1 py-2 rounded-md border border-black/30 w-full" />
-
-                                                <textarea name="visit_desc" placeholder="Deskripsi atau Catatan"
-                                                    class="rounded-md border px-1 py-2 border-black/30 w-full flex-1 text-left">{{ old('visit_desc', $visit->description) }}</textarea>
-
-
-                                                <div class="w-full flex items-center justify-end">
-                                                    <button type="submit"
-                                                        class="px-2 py-1 bg-primary rounded-md">Tambah</button>
-                                                </div>
-                                            </form>
-                                        </x-slot>
-
-                                    </x-modal>
-
-                                    {{-- delete  --}}
-                                    <x-modal title="Hapus Data Peminjam">
-                                        <x-slot name="buttonSlot">
-                                            <button>
-                                                <span class="material-symbols-outlined text-red-600">
-                                                    delete
-                                                </span>
-                                            </button>
-                                        </x-slot>
-
-                                        <x-slot name="contentSlot">
-                                            <div class="w-[400px]">
-                                                <p class="text-sm font-medium">Apakah anda yakin akan menghapus
-                                                    data kunjungan <span class="font-bold">{{ $visit->name }}</span>?
-                                                    Data
-                                                    yang dihapus akan hilang dari list</p>
-
-                                                <form action="{{ route('kunjungan.destroy', $visit->id) }}"
-                                                    method="POST" class="mt-3 w-full flex items-center justify-end"
-                                                    id="deleteVisitForm">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"
-                                                        class="bg-red-600 text-white !px-3 !py-1 rounded-md">
-                                                        <p class="text-sm truncate">Hapus</p>
-                                                </form>
-                                                </button>
-                                            </div>
-                                        </x-slot>
-                                    </x-modal>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-
-        <div class="mt-8">
-            {{ $visits->appends(request()->except('page'))->links('vendor.pagination.default') }} </div>
     </div>
 @endsection
 

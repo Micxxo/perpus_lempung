@@ -47,6 +47,7 @@ class LoanController extends Controller
             })->when($user->role_id === 1, function ($query) use ($relatedMember) {
                 return $query->where('member_id', $relatedMember->id);
             })
+            ->orderBy('created_at', 'desc')
             ->paginate(5);
 
         $firstLoan = Loan::query()

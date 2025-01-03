@@ -52,8 +52,8 @@
     table th,
     table td {
         border: 1px solid #ddd;
-        text-align: left;
         padding: 8px;
+        text-align: center;
     }
 
     table th {
@@ -108,6 +108,7 @@
                     Member
                 @endif
             </p>
+            <p>Deskripsi/catatan: {{ $report->description ? $report->description : '-' }}</p>
         </div>
         @if ($report->report_type === 'loans')
             <table>

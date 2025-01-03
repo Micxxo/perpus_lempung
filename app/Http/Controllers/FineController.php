@@ -33,11 +33,12 @@ class FineController extends Controller
             })->when($fineBookStatus, function ($query, $filter) {
                 $query->where('status', $filter);
             })
+            ->orderBy('created_at', 'desc')
             ->with(['loan.book', 'loan.member.user'])
             ->paginate(15);
 
         $loans = Loan::with(['member.user'])
-            ->where('status', '!=', 'fines')
+            ->where('status', '!=', 'fine')
             ->get();
 
         return view('fines', compact('fineSearch', 'fines', 'loans', 'fineStatus', 'fineBookStatus'));

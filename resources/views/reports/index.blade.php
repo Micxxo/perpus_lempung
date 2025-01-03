@@ -12,8 +12,7 @@
                 <div class="flex items-center w-1/4 border border-black/30 rounded-md">
                     <input type="text"
                         class="border-none bg-white flex-1 py-1.5 px-2 rounded-md focus:outline-none placeholder:text-black/50"
-                        placeholder="Cari judul atau jenis laporan" name="report_search"
-                        value="{{ old('report_search', $reportSearch) }}" />
+                        placeholder="Cari judul" name="report_search" value="{{ old('report_search', $reportSearch) }}" />
                     <div class="flex items-center justify-center pr-3">
                         <span class="material-symbols-outlined" style="font-size: 20px">
                             search

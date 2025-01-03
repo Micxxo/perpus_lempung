@@ -12,7 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('reports', function (Blueprint $table) {
-            $table->string('title')->after('report_type');
+            $table->dropForeign(['member_id']);
+
+            $table->renameColumn('member_id', 'reporter_id');
+
+            $table->foreign('reporter_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -22,7 +26,11 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('reports', function (Blueprint $table) {
-            $table->dropColumn('title');
+            $table->dropForeign(['reporter_id']);
+
+            $table->renameColumn('reporter_id', 'member_id');
+
+            $table->foreign('member_id')->references('id')->on('members')->onDelete('cascade');
         });
     }
 };

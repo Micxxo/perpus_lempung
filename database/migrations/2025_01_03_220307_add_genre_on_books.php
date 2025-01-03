@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('reports', function (Blueprint $table) {
-            $table->enum('report_type', ['visits', 'loans', 'fines', 'members'])->change();
+        Schema::table('books', function (Blueprint $table) {
+            $table->string('genre')->after('image');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('reports', function (Blueprint $table) {
-            $table->string('report_type')->change();
+        Schema::table('books', function (Blueprint $table) {
+            $table->dropColumn('genre');
         });
     }
 };

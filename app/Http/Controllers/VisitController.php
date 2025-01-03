@@ -19,6 +19,7 @@ class VisitController extends Controller
             ->when($visitDate, function ($query) use ($visitDate) {
                 return $query->whereDate('date', $visitDate);
             })
+            ->orderBy('created_at', 'desc')
             ->paginate(15);
 
         return view('visits', compact('visitSearch', 'visitDate', 'visits'));

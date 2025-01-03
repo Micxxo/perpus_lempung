@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('coppies');
             $table->string('status');
             $table->string('image');
+            $table->string('genre');
             $table->string('name');
             $table->text('description')->nullable();
             $table->year('year');

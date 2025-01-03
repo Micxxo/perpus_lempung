@@ -48,7 +48,7 @@ class BookController extends Controller
                     $subQuery->where('name', 'like', '%' . $search . '%')
                         ->orWhere('authors', 'like', '%' . $search . '%');
                 });
-            })
+            })->orderBy('created_at', 'desc')
             ->paginate(10);
 
         return view('book', compact('books', 'search', 'status'));
@@ -80,7 +80,9 @@ class BookController extends Controller
             $book->authors = $request->authors;
             $book->genre = $request->genre;
             $book->coppies = $request->coppies;
-            $book->description = $request->description;
+            if ($request->description) {
+                $book->description = $request->description;
+            }
             $book->image = $imagePath;
             $book->status = $status;
             $book->save();
@@ -135,7 +137,9 @@ class BookController extends Controller
             $book->authors = $request->authors;
             $book->genre = $request->genre;
             $book->coppies = $request->coppies;
-            $book->description = $request->description;
+            if ($request->description) {
+                $book->description = $request->description;
+            }
             $book->status = $request->coppies > 0 ? 'available' : 'out-stock';
 
             $book->save();

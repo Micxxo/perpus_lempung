@@ -120,7 +120,7 @@
                                             required placeholder="Genre" />
                                         <textarea type="text" name="description"
                                             class="border border-gray-300 flex-1 rounded-md w-full placeholder:text-gray-500 placeholder:text-sm px-3 py-1.5"
-                                            required placeholder="Deskripsi"></textarea>
+                                            placeholder="Deskripsi"></textarea>
                                     </div>
                                 </div>
                                 <div class="w-full flex justify-end items-center mt-5">
@@ -307,7 +307,7 @@
                                                                         placeholder="Genre" />
                                                                     <textarea type="text" name="description"
                                                                         class="border border-gray-300 flex-1 rounded-md w-full placeholder:text-gray-500 placeholder:text-sm px-3 py-1.5"
-                                                                        required placeholder="Deskripsi">{{ $book->description }}</textarea>
+                                                                        placeholder="Deskripsi">{{ $book->description }}</textarea>
                                                                 </div>
                                                             </div>
                                                             <div class="w-full flex justify-end items-center mt-5">

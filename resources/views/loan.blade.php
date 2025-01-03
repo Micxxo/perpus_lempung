@@ -389,10 +389,11 @@
                                                                             <input type="date" id="borrowingDate"
                                                                                 class="border py-3 px-2 rounded-md border-black/30"
                                                                                 placeholder="Tanggal dipinjam"
-                                                                                name="borrowing_date" x-init=" if (selectedLoan && selectedLoan.created_at) {
-                                                                                     borrowingDate.value = selectedLoan.created_at.toISOString().slice(0, 10);
-                                                                                 }"
+                                                                                name="borrowing_date"
+                                                                                x-bind:value="formatCreatedAtOnUpdate(selectedLoan
+                                                                                    .created_at)"
                                                                                 required>
+
                                                                         </div>
                                                                         <div class="w-full flex flex-col gap-y-1">
                                                                             <label for="returningDate"
@@ -435,7 +436,7 @@
                                                         </x-slot>
                                                     </x-modal>
 
-                                                    {{-- delete book  --}}
+                                                    {{-- delete  --}}
                                                     <x-modal title="Hapus Data Peminjaman">
                                                         <x-slot name="buttonSlot">
                                                             <button type="button"
@@ -582,6 +583,15 @@
         statusLoanInput.value = status;
 
         form.submit();
+    }
+
+    function formatCreatedAtOnUpdate(dateString) {
+        const date = new Date(dateString); // Pastikan tanggalnya berupa objek Date
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2,
+            '0'); // Tambahkan 1 untuk bulan karena bulan dimulai dari 0
+        const day = date.getDate().toString().padStart(2, '0');
+        return `${year}-${month}-${day}`;
     }
 
     // format loan date with js 

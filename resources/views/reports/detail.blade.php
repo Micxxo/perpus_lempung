@@ -38,10 +38,13 @@
             @endif
 
             <div class="w-full mt-5 !h-full flex flex-col">
-                <div class="mt-1">
+                <div class="mt-1 space-y-1">
                     <h1 class="font-semibold text-3xl">{{ $report->title }}</h1>
-                    <p class="text-xs my-1">Dilaporkan oleh: <span>{{ $report->reporter->username }}</span></p>
+                    <p class="text-xs">Dilaporkan oleh: <span>{{ $report->reporter->username }}</span></p>
                     <p class="text-xs">Dilaporkan pada: <span>{{ $report->created_at }}</span></p>
+                    <p class="text-xs">Deskripsi/catatan:
+                        <span>{{ $report->description ? $report->description : '-' }}</span>
+                    </p>
                 </div>
 
                 <div class="overflow-y-auto custom-scrollbar pr-2 flex-1 mt-5 mb-5">
