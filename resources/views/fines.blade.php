@@ -181,6 +181,7 @@
                     </th>
                     <th class="font-semibold text-left py-2 px-4 border-r border-gray-300">Status buku</th>
                     <th class="font-semibold text-left py-2 px-4 border-r border-gray-300">Status denda</th>
+                    <th class="font-semibold text-left py-2 px-4 border-r border-gray-300">Dibuat oleh</th>
                     <th class="font-semibold text-left py-2 px-4 border-r border-gray-300">Deskripsi</th>
                     <th class="font-semibold text-left py-2 px-4 rounded-tr-md">Aksi</th>
                 </thead>
@@ -217,6 +218,9 @@
                                         Dalam Proses
                                     @endif
                                 </p>
+                            </td>
+                            <td class="px-4 py-3 text-left border-r border-gray-200 ">
+                                <p>{{ $fine->created_by ? $fine->creator->username : '-' }}</p>
                             </td>
                             <td class="px-4 py-3 text-left border-r border-gray-200 ">
                                 <p>{{ $fine->description ? $fine->description : '-' }}</p>

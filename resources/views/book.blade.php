@@ -29,8 +29,14 @@
                     <x-slot name="buttonSlot">
                         <div class="p-1 flex items-center gap-2">
                             <div
-                                class="text-sm font-medium px-5 py-1 rounded-xl {{ $status == 'tersedia' ? 'bg-accent text-white' : ($status == 'out-stock' ? 'bg-red-600 text-white' : 'bg-primary') }}">
-                                {{ $status ? ucfirst($status) : 'Semua' }}
+                                class="text-sm font-medium px-5 py-1 rounded-xl {{ $status == 'available' ? 'bg-accent text-white' : ($status == 'out-stock' ? 'bg-red-600 text-white' : 'bg-primary') }}">
+                                @if ($status === 'available')
+                                    Tersedia
+                                @elseif ($status === 'out-stock')
+                                    Tidak ada stok
+                                @else
+                                    Semua
+                                @endif
                             </div>
 
                             <span class="material-symbols-outlined text-black/50" style="font-size: 28px">
@@ -188,7 +194,8 @@
                                                     <div class="h-full w-[2px] bg-gray-200"></div>
                                                     <div class="flex-1 space-y-2">
                                                         <h1 class="text-base font-semibold">{{ $book->name }}</h1>
-                                                        <p class="text-sm">{{ $book->description }}</p>
+                                                        <p class="text-sm">
+                                                            {{ $book->description ? $book->description : '-' }}</p>
                                                         <p class="font-bold text-sm">Author: <span
                                                                 class="font-medium">{{ $book->authors }}</span></p>
                                                         <p class="font-bold text-sm">Genre: <span

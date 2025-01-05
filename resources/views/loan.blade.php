@@ -37,7 +37,8 @@
                             <div class="flex items-center border border-black/30 rounded-md">
                                 <input type="text"
                                     class="border-none bg-white flex-1 py-1.5 px-2 rounded-md focus:outline-none placeholder:text-black/50"
-                                    placeholder="Cari nama buku" name="book_title_search" />
+                                    placeholder="Cari nama buku" name="book_title_search"
+                                    value="{{ old('book_title_search', $bookTitleSearch) }}" />
                                 <div class="flex items-center justify-center pr-3">
                                     <span class="material-symbols-outlined" style="font-size: 20px">
                                         search
@@ -257,11 +258,6 @@
                                 <p class="font-semibold text-3xl md:text-4xl text-center md:text-left">Peminjaman <br> tidak
                                     ditemukan
                                 </p>
-                                @if (auth()->user()->role_id === 2)
-                                    <button
-                                        class="py-2 px-5 duration-200 rounded-md border-2 border-primary hover:bg-primary font-medium mt-3">Buat
-                                        Data</button>
-                                @endif
                             </div>
                         </x-book-error-state>
                     </div>
@@ -336,6 +332,13 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div>
+                                        <p class="text-xs text-black/50">Deskripsi</p>
+                                        <h1 class="text-sm text-black"
+                                            x-text="selectedLoan.description ? selectedLoan.description : '-'">
+                                    </div>
+
                                     @auth
                                         @if (Auth::user()->role_id === 2)
                                             <div>

@@ -66,6 +66,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/pengguna/{id}', [UserController::class, 'destroy'])->name('pengguna.destroy');
 
     Route::get('/laporan', [ReportController::class, 'showReportPage'])->name('laporan');
+    Route::delete('/laporan/{id}', [ReportController::class, 'destroy'])->name('laporan.destroy');
+    Route::put('/laporan/{id}', [ReportController::class, 'update'])->name('laporan.update');
     Route::get('/laporan/detail/{id}', [ReportController::class, 'showDetailPage'])->name('laporan.detail');
     Route::post('/laporan', [ReportController::class, 'store'])->name('laporan.store');
     Route::get('/laporan/cetak/{id}', [ReportController::class, 'generateReportPDF'])->name('laporan.generate');

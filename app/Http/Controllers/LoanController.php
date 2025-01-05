@@ -124,6 +124,8 @@ class LoanController extends Controller
         try {
             $loan = Loan::findOrFail($loanId);
 
+            $book = Book::find($request->loan_book_name);
+            $previousBookId = $loan->book_id;
             $previousStatus = $loan->status;
 
             $loan->book_id = $request->loan_book_name;
@@ -136,7 +138,26 @@ class LoanController extends Controller
             $loan->save();
 
             // Update book coppies
-            $book = Book::find($request->loan_book_name);
+            if ($previousBookId !== $request->loan_book_name) {
+                $previousBook = Book::find($previousBookId);
+                if ($previousBook) {
+                    $previousBook->coppies += 1;
+                    if ($previousBook->coppies > 0) {
+                        $previousBook->status = 'available';
+                    }
+                    $previousBook->save();
+                }
+
+                $newBook = Book::find($request->loan_book_name);
+                if ($newBook) {
+                    $newBook->coppies -= 1;
+                    if ($newBook->coppies == 0) {
+                        $newBook->status = 'out-stock';
+                    }
+                    $newBook->save();
+                }
+            }
+
             if ($book) {
                 // Jika status sebelumnya adalah 'returned' dan status saat ini 'returned'
                 if ($previousStatus === 'returned' && $request->loan_status === 'returned') {
@@ -159,20 +180,6 @@ class LoanController extends Controller
                     }
                     $book->save();
                 }
-
-                // Jika status sebelumnya adalah fines
-                // elseif ($previousStatus === 'fine' && $request->loan_status !== 'fine') {
-                //     $fine = Fine::where('loan_id', $loanId)->delete();
-                //     if ($fine) {
-                //         if ($fine->status !== 'pay_for_book') {
-                //             $book->coppies -= 1;
-                //             if ($book->coppies <= 0) {
-                //                 $book->status = 'unavailable';
-                //             }
-                //             $book->save();
-                //         }
-                //     }
-                // }
             }
 
 

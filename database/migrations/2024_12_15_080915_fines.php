@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('fines', function (Blueprint $table) {
             $table->id();
             $table->foreignId('loan_id')->constrained('loans')->onDelete('cascade');
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
             $table->enum('status', ['pay_for_book', 'change_book', 'paying_fine']);
             $table->date('date');
             $table->boolean('is_done')->default(false);

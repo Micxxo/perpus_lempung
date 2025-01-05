@@ -137,9 +137,7 @@ class BookController extends Controller
             $book->authors = $request->authors;
             $book->genre = $request->genre;
             $book->coppies = $request->coppies;
-            if ($request->description) {
-                $book->description = $request->description;
-            }
+            $book->description = $request->description;
             $book->status = $request->coppies > 0 ? 'available' : 'out-stock';
 
             $book->save();

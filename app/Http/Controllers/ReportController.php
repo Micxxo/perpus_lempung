@@ -18,9 +18,13 @@ class ReportController extends Controller
     {
         $reportSearch = $request->input('report_search');
         $reportType = $request->input('report_type');
+        $user = Auth::user();
 
         $reports = Report::query()
             ->with(['reporter'])
+            ->when($user->role_id == 2, function ($query) use ($user) {
+                return $query->where('reporter_id', $user->id);
+            })
             ->when($reportSearch, function ($query, $reportSearch) {
                 return $query->where(function ($subQuery) use ($reportSearch) {
                     $subQuery->where('title', 'like', '%' . $reportSearch . '%');
@@ -105,6 +109,23 @@ class ReportController extends Controller
         }
     }
 
+    public function update(Request $request, $reportId)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+        ]);
+
+        try {
+            $report = Report::findOrFail($reportId);
+            $report->title = $request->title;
+            $report->save();
+
+            return redirect()->back()->with('success', 'Edit laporan berhasil.');
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat mengedit laporan: ' . $e->getMessage());
+        }
+    }
+
     public function generateReportPDF(Request $request, $id)
     {
         $report = Report::with(['details', 'reporter'])->findOrFail($id);
@@ -132,5 +153,17 @@ class ReportController extends Controller
         $pdf = Pdf::loadView('reportPDF', $data);
 
         return $pdf->download('laporan.pdf');
+    }
+
+    public function destroy($reportId)
+    {
+        try {
+            $report = Report::findOrFail($reportId);
+            $report->delete();
+
+            return redirect()->route('laporan')->with('success', 'Laporan berhasil dihapus!');
+        } catch (\Exception $e) {
+            return redirect()->route('laporan')->with('error', 'Terjadi kesalahan saat menghapus laporan: ' . $e->getMessage());
+        }
     }
 }

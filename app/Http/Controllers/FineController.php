@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\Fine;
 use App\Models\Loan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FineController extends Controller
 {
@@ -34,7 +35,7 @@ class FineController extends Controller
                 $query->where('status', $filter);
             })
             ->orderBy('created_at', 'desc')
-            ->with(['loan.book', 'loan.member.user'])
+            ->with(['loan.book', 'loan.member.user', 'creator'])
             ->paginate(15);
 
         $loans = Loan::with(['member.user'])
@@ -47,6 +48,7 @@ class FineController extends Controller
     public function store(Request $request)
     {
         $loanId = $request->input('loan_id');
+        $user = Auth::user();
 
         $validatedData = $request->validate([
             'status' => 'required|string|in:pay_for_book,change_book,paying_fine',  //
@@ -61,6 +63,7 @@ class FineController extends Controller
             $fine->date = $request->date;
             $fine->is_done = $request->is_done;
             $fine->description = $request->description;
+            $fine->created_by = $user->id;
             $fine->save();
 
             $loan = Loan::with('book')->findOrFail($loanId);

@@ -139,7 +139,7 @@
                         <th class="font-semibold border-r border-gray-300 text-left py-2 px-4">Nama pengunjung</th>
                         <th class="font-semibold border-r border-gray-300 text-left py-2 px-4 ">Tanggal kedatangan
                         </th>
-                        <th class="font-semibold text-left py-2 px-4 border-r border-gray-300">Deskripsi</th>
+                        <th class="font-semibold text-left py-2 px-4 border-r border-gray-300">Deskripsi/Catatan</th>
                         <th class="font-semibold text-left py-2 px-4 rounded-tr-md">Aksi</th>
                     </thead>
                     <tbody>

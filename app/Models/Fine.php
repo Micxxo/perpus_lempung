@@ -10,4 +10,9 @@ class Fine extends Model
     {
         return $this->belongsTo(Loan::class, 'loan_id', 'id');
     }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }

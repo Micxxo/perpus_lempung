@@ -107,7 +107,7 @@
         @endauth
 
         @auth
-            @if (Auth::user()->role_id === 3)
+            @if (Auth::user()->role_id !== 1)
                 <button
                     class="flex items-center gap-2 rounded-lg 
     {{ Request::is('laporan') || Request::is('laporan/detail/*') ? 'bg-white shadow-blur-sm' : 'bg-transparent' }}"

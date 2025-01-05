@@ -117,12 +117,11 @@ class UserController extends Controller
 
         $user = User::findOrFail($userId);
 
-        $imagePath = null;
         if ($request->hasFile('profile')) {
             $imagePath = $request->file('profile')->store('users', 'public');
+            $user->profile = $imagePath;
         }
 
-        $user->profile = $imagePath;
         if ($request->filled('username')) {
             $user->username = $request->username;
         }
