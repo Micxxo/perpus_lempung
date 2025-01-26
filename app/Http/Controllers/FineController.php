@@ -35,7 +35,7 @@ class FineController extends Controller
                 $query->where('status', $filter);
             })
             ->orderBy('created_at', 'desc')
-            ->with(['loan.book', 'loan.member.user', 'creator'])
+            ->with(['loan.book', 'loan.member.user', 'creator', 'invoice'])
             ->paginate(15);
 
         $loans = Loan::with(['member.user'])

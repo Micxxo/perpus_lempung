@@ -30,7 +30,7 @@
         <!-- Panel -->
         <div x-data="{ position: '{{ $position }}' }" x-ref="panel" x-show="open" x-transition.origin.top.left
             x-on:click.outside="close($refs.button)" :id="$id('dropdown-button')" x-cloak
-            class="absolute min-w-48 z-50 rounded-lg shadow-sm mt-2 z-10 origin-top-left bg-white p-1.5 outline-none border border-gray-200 {{ $panelClass }}"
+            class="absolute min-w-48 z-50 rounded-lg shadow-sm mt-2  origin-top-left bg-white p-1.5 outline-none border border-gray-200 {{ $panelClass }}"
             :class="position === 'right' ? 'left-0' : 'right-0'">
             {!! $contentSlot ?? '<span>Options</span>' !!}
         </div>

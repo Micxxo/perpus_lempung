@@ -46,6 +46,16 @@
     .custom-scrollbar::-webkit-scrollbar-corner {
         background-color: #f1f1f1;
     }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
 </style>
 
 <body class="font-instrument-sans h-screen overflow-x-hidden">

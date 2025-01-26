@@ -226,105 +226,192 @@
                                 <p>{{ $fine->description ? $fine->description : '-' }}</p>
                             </td>
                             <td class="px-4 py-3 text-left border-r border-gray-200 flex items-center gap-2">
-                                {{-- edit  --}}
-                                <x-modal title="Edit Denda">
+                                <x-dropdown position="left" panelClass="!min-w-fit !px-3 !py-2" class="!px-2 !py-1">
                                     <x-slot name="buttonSlot">
-                                        <button>
+                                        <div>
                                             <span class="material-symbols-outlined">
-                                                edit
+                                                more_horiz
                                             </span>
-                                        </button>
-                                    </x-slot>
-                                    <x-slot name="contentSlot">
-                                        <div class="w-[400px] h-[350px]">
-                                            <form action="{{ route('denda.update', $fine->id) }}" method="POST"
-                                                class="h-full flex flex-col gap-y-3">
-                                                @csrf
-                                                @method('PUT')
-
-                                                <select name="status" id="fineBookStatus"
-                                                    class="rounded-md border border-black/30 px-1 py-2">
-                                                    <option value="">Pilih status buku</option>
-                                                    <option value="pay_for_book"
-                                                        {{ old('status', $fine->status) === 'pay_for_book' ? 'selected' : '' }}>
-                                                        Membayar seharga buku
-                                                    </option>
-                                                    <option value="change_book"
-                                                        {{ old('status', $fine->status) === 'change_book' ? 'selected' : '' }}>
-                                                        Mengganti buku
-                                                    </option>
-                                                    <option value="paying_fine"
-                                                        {{ old('status', $fine->status) === 'paying_fine' ? 'selected' : '' }}>
-                                                        Membayar Denda
-                                                    </option>
-                                                </select>
-
-                                                <select name="is_done" id="fineStatus"
-                                                    class="rounded-md border border-black/30 px-1 py-2">
-                                                    <option value="">Pilih status denda</option>
-                                                    <option value="1"
-                                                        {{ old('is_done', $fine->is_done) == 1 ? 'selected' : '' }}>
-                                                        Selesai
-                                                    </option>
-                                                    <option value="0"
-                                                        {{ old('is_done', $fine->is_done) == 0 ? 'selected' : '' }}>
-                                                        Belum selesai
-                                                    </option>
-                                                </select>
-
-                                                <div class="flex flex-col gap-y-1">
-                                                    <label for="inputCreateFineDate"
-                                                        class="text-sm text-black/50">Tanggal</label>
-                                                    <input type="date"
-                                                        class="rounded-md border border-black/30 px-1 py-2" name="date"
-                                                        id="inputCreateFineDate"
-                                                        value="{{ old('date', $fine->date ?? '') }}" />
-                                                </div>
-
-                                                <textarea name="description" placeholder="Deskripsi" id="createFineDescription"
-                                                    class="rounded-md border border-black/30 px-1 py-2 flex-1">{{ old('description', $fine->description ?? '') }}</textarea>
-
-                                                <div class="flex items-center justify-end">
-                                                    <button type="submit" class="px-2 py-1 bg-primary rounded-md">Edit
-                                                        Denda</button>
-                                                </div>
-                                            </form>
-                                            </button>
                                         </div>
                                     </x-slot>
-                                </x-modal>
-
-                                {{-- delete  --}}
-                                <x-modal title="Hapus Data Peminjam">
-                                    <x-slot name="buttonSlot">
-                                        <button>
-                                            <span class="material-symbols-outlined text-red-600">
-                                                delete
-                                            </span>
-                                        </button>
-                                    </x-slot>
-
                                     <x-slot name="contentSlot">
-                                        <div class="w-[400px]">
-                                            <p class="text-sm font-medium">Apakah anda yakin akan menghapus
-                                                data denda atas nama <span
-                                                    class="font-bold">{{ $fine->loan->member->user->username }}</span>?
-                                                Data
-                                                yang dihapus akan hilang dari list</p>
+                                        <div class="flex flex-col gap-y-2">
+                                            {{-- edit  --}}
+                                            <x-modal title="Edit Denda">
+                                                <x-slot name="buttonSlot">
+                                                    <button
+                                                        class="flex items-center gap-2 p-1 rounded-md border border-black/10 hover:bg-gray-200 duration-200">
+                                                        <span class="material-symbols-outlined">
+                                                            edit
+                                                        </span>
+                                                    </button>
+                                                </x-slot>
+                                                <x-slot name="contentSlot">
+                                                    <div class="w-[400px] h-[350px]">
+                                                        <form action="{{ route('denda.update', $fine->id) }}"
+                                                            method="POST" class="h-full flex flex-col gap-y-3">
+                                                            @csrf
+                                                            @method('PUT')
 
-                                            <form action="{{ route('denda.destroy', $fine->id) }}" method="POST"
-                                                class="mt-3 w-full flex items-center justify-end" id="deleteVisitForm">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                    class="bg-red-600 text-white !px-3 !py-1 rounded-md">
-                                                    <p class="text-sm truncate">Hapus</p>
-                                            </form>
-                                            </button>
+                                                            <select name="status" id="fineBookStatus"
+                                                                class="rounded-md border border-black/30 px-1 py-2">
+                                                                <option value="">Pilih status buku</option>
+                                                                <option value="pay_for_book"
+                                                                    {{ old('status', $fine->status) === 'pay_for_book' ? 'selected' : '' }}>
+                                                                    Membayar seharga buku
+                                                                </option>
+                                                                <option value="change_book"
+                                                                    {{ old('status', $fine->status) === 'change_book' ? 'selected' : '' }}>
+                                                                    Mengganti buku
+                                                                </option>
+                                                                <option value="paying_fine"
+                                                                    {{ old('status', $fine->status) === 'paying_fine' ? 'selected' : '' }}>
+                                                                    Membayar Denda
+                                                                </option>
+                                                            </select>
+
+                                                            <select name="is_done" id="fineStatus"
+                                                                class="rounded-md border border-black/30 px-1 py-2">
+                                                                <option value="">Pilih status denda</option>
+                                                                <option value="1"
+                                                                    {{ old('is_done', $fine->is_done) == 1 ? 'selected' : '' }}>
+                                                                    Selesai
+                                                                </option>
+                                                                <option value="0"
+                                                                    {{ old('is_done', $fine->is_done) == 0 ? 'selected' : '' }}>
+                                                                    Belum selesai
+                                                                </option>
+                                                            </select>
+
+                                                            <div class="flex flex-col gap-y-1">
+                                                                <label for="inputCreateFineDate"
+                                                                    class="text-sm text-black/50">Tanggal</label>
+                                                                <input type="date"
+                                                                    class="rounded-md border border-black/30 px-1 py-2"
+                                                                    name="date" id="inputCreateFineDate"
+                                                                    value="{{ old('date', $fine->date ?? '') }}" />
+                                                            </div>
+
+                                                            <textarea name="description" placeholder="Deskripsi" id="createFineDescription"
+                                                                class="rounded-md border border-black/30 px-1 py-2 flex-1">{{ old('description', $fine->description ?? '') }}</textarea>
+
+                                                            <div class="flex items-center justify-end">
+                                                                <button type="submit"
+                                                                    class="px-2 py-1 bg-primary rounded-md">Edit
+                                                                    Denda</button>
+                                                            </div>
+                                                        </form>
+                                                        </button>
+                                                    </div>
+                                                </x-slot>
+                                            </x-modal>
+
+                                            {{-- create invoice  --}}
+                                            @if (!$fine->invoice)
+                                                <x-modal title="Buat Invoice">
+                                                    <x-slot name="buttonSlot">
+                                                        <button
+                                                            class="flex items-center gap-2 p-1 rounded-md border border-black/10 hover:bg-gray-200 duration-200">
+                                                            <span class="material-symbols-outlined">
+                                                                receipt_long
+                                                            </span>
+                                                        </button>
+                                                    </x-slot>
+                                                    <x-slot name="contentSlot">
+                                                        <div class="w-full h-[300px]">
+                                                            <form action="{{ route('invoice.store', $fine->id) }}"
+                                                                method="POST" class="h-full flex flex-col gap-y-3">
+                                                                @csrf
+
+                                                                <div class="flex flex-col gap-y-1">
+                                                                    <label for="total_price"
+                                                                        class="text-sm text-gray-500 font-normal">Total
+                                                                        harga</label>
+                                                                    <input type="number" id="total_price"
+                                                                        class="rounded-md border border-black/30 px-1 py-2"
+                                                                        required name="total_price"
+                                                                        placeholder="Total Harga" />
+                                                                </div>
+
+                                                                <div class="flex flex-col gap-y-1">
+                                                                    <label for="total_paid"
+                                                                        class="text-sm text-gray-500 font-normal">Total
+                                                                        dibayar</label>
+                                                                    <input type="number" id="total_paid"
+                                                                        class="rounded-md border border-black/30 px-1 py-2"
+                                                                        required name="total_paid"
+                                                                        placeholder="Total Dibayar" />
+                                                                </div>
+
+                                                                <div class="flex flex-col flex-1 gap-y-1">
+                                                                    <label for="description"
+                                                                        class="text-sm text-gray-500 font-normal">Deskripsi</label>
+                                                                    <textarea type="text" id="description" class="rounded-md border border-black/30 px-1 py-2 flex-1"
+                                                                        name="description" placeholder="Deskripsi"></textarea>
+                                                                </div>
+
+                                                                <div class="flex items-center justify-end">
+                                                                    <button type="submit"
+                                                                        class="px-2 py-1 bg-primary rounded-md">Buat
+                                                                        invoice</button>
+                                                                </div>
+                                                            </form>
+                                                            </button>
+                                                        </div>
+                                                    </x-slot>
+                                                </x-modal>
+                                            @else
+                                                {{-- generate invoice  --}}
+                                                <div>
+                                                    <form action="{{ route('invoice.generate', $fine->invoice->id) }}"
+                                                        class="block !m-0 !h-fit !w-fit" method="GET">
+                                                        <button
+                                                            class="flex items-center gap-2 p-1 rounded-md border border-black/10 hover:bg-gray-200 duration-200">
+                                                            <span class="material-symbols-outlined">
+                                                                receipt
+                                                            </span>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            @endif
+
+
+                                            {{-- delete  --}}
+                                            <x-modal title="Hapus Data Peminjam">
+                                                <x-slot name="buttonSlot">
+                                                    <button
+                                                        class="flex items-center gap-2 p-1 rounded-md border border-black/10 hover:bg-gray-200 duration-200">
+                                                        <span class="material-symbols-outlined text-red-600">
+                                                            delete
+                                                        </span>
+                                                    </button>
+                                                </x-slot>
+
+                                                <x-slot name="contentSlot">
+                                                    <div class="w-[400px]">
+                                                        <p class="text-sm font-medium">Apakah anda yakin akan menghapus
+                                                            data denda atas nama <span
+                                                                class="font-bold">{{ $fine->loan->member->user->username }}</span>?
+                                                            Data
+                                                            yang dihapus akan hilang dari list</p>
+
+                                                        <form action="{{ route('denda.destroy', $fine->id) }}"
+                                                            method="POST"
+                                                            class="mt-3 w-full flex items-center justify-end"
+                                                            id="deleteVisitForm">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="bg-red-600 text-white !px-3 !py-1 rounded-md">
+                                                                <p class="text-sm truncate">Hapus</p>
+                                                        </form>
+                                                        </button>
+                                                    </div>
+                                                </x-slot>
+                                            </x-modal>
                                         </div>
                                     </x-slot>
-                                </x-modal>
-
+                                </x-dropdown>
                             </td>
                         </tr>
                     @endforeach

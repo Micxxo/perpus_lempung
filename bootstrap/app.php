@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->withSchedule(function (Schedule $schedule) {
+        // ubah ke everyMinute untuk presentasi
         $schedule->command('reminder:return-book')->dailyAt('07:00')->evenInMaintenanceMode();
         $schedule->command('loan:update-status')->dailyAt('07:00')->evenInMaintenanceMode();
     })

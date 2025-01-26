@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\FineController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ReportController;
@@ -71,4 +72,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/laporan/detail/{id}', [ReportController::class, 'showDetailPage'])->name('laporan.detail');
     Route::post('/laporan', [ReportController::class, 'store'])->name('laporan.store');
     Route::get('/laporan/cetak/{id}', [ReportController::class, 'generateReportPDF'])->name('laporan.generate');
+
+    Route::post('/invoice/store/{fine}', [InvoiceController::class, 'store'])->name('invoice.store');
+    Route::get('/invoice/cetak/{invoice}', [InvoiceController::class, 'generateInvoicePDF'])->name('invoice.generate');
 });

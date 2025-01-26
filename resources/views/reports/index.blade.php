@@ -88,90 +88,107 @@
                                 <p>{{ $report->created_at }}</p>
                             </td>
                             <td class="px-4 py-3 text-left border-r border-gray-200">
-                                @auth
-                                    @if (Auth::user()->role_id === 3)
-                                        <div class="flex items-center gap-2">
-                                            <form action="{{ route('laporan.detail', $report->id) }}" method="GET">
-                                                <button type="submit">
-                                                    <span class="material-symbols-outlined">
-                                                        visibility
-                                                    </span>
-                                                </button>
-                                            </form>
+                                <x-dropdown position="left" panelClass="!min-w-fit !px-3 !py-2" class="!px-2 !py-1">
+                                    <x-slot name="buttonSlot">
+                                        <div>
+                                            <span class="material-symbols-outlined">
+                                                more_horiz
+                                            </span>
                                         </div>
-                                    @endif
-                                @endauth
-                                @auth
-                                    @if (Auth::user()->role_id === 2)
-                                        <div class="flex items-center gap-2">
+                                    </x-slot>
+                                    <x-slot name="contentSlot">
+                                        @auth
+                                            @if (Auth::user()->role_id === 3)
+                                                <div class="flex items-center gap-2">
+                                                    <form action="{{ route('laporan.detail', $report->id) }}" method="GET">
+                                                        <button type="submit"
+                                                            class="flex items-center gap-2 p-1 rounded-md border border-black/10 hover:bg-gray-200 duration-200">
+                                                            <span class="material-symbols-outlined">
+                                                                visibility
+                                                            </span>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            @endif
+                                        @endauth
+                                        @auth
+                                            @if (Auth::user()->role_id === 2)
+                                                <div class="flex flex-col items-center gap-y-2 w-fit">
 
-                                            {{-- edit  --}}
-                                            <x-modal title="Edit Laporan">
-                                                <x-slot name="buttonSlot">
-                                                    <button>
-                                                        <span class="material-symbols-outlined">
-                                                            edit
-                                                        </span>
-                                                    </button>
-                                                </x-slot>
-                                                <x-slot name="contentSlot">
-                                                    <div class="w-full h-fit">
-                                                        <form action="{{ route('laporan.update', $report->id) }}" method="POST"
-                                                            class="h-full flex flex-col gap-y-3">
-                                                            @csrf
-                                                            @method('PUT')
+                                                    {{-- edit  --}}
+                                                    <x-modal title="Edit Laporan">
+                                                        <x-slot name="buttonSlot">
+                                                            <button
+                                                                class="flex items-center gap-2 p-1 rounded-md border border-black/10 hover:bg-gray-200 duration-200">
+                                                                <span class="material-symbols-outlined">
+                                                                    edit
+                                                                </span>
+                                                            </button>
+                                                        </x-slot>
+                                                        <x-slot name="contentSlot">
+                                                            <div class="w-full h-fit">
+                                                                <form action="{{ route('laporan.update', $report->id) }}"
+                                                                    method="POST" class="h-full flex flex-col gap-y-3">
+                                                                    @csrf
+                                                                    @method('PUT')
 
-                                                            <input type="text"
-                                                                class="rounded-md border border-black/30 px-1 py-2" required
-                                                                name="title" placeholder="Judul laporan"
-                                                                value="{{ old('title', $report->title ?? '') }}" />
+                                                                    <input type="text"
+                                                                        class="rounded-md border border-black/30 px-1 py-2"
+                                                                        required name="title" placeholder="Judul laporan"
+                                                                        value="{{ old('title', $report->title ?? '') }}" />
 
-                                                            <div class="flex items-center justify-end">
-                                                                <button type="submit"
-                                                                    class="px-2 py-1 bg-primary rounded-md">Edit
-                                                                    Denda</button>
+                                                                    <div class="flex items-center justify-end">
+                                                                        <button type="submit"
+                                                                            class="px-2 py-1 bg-primary rounded-md">Edit
+                                                                            Laporan</button>
+                                                                    </div>
+                                                                </form>
+                                                                </button>
                                                             </div>
-                                                        </form>
-                                                        </button>
-                                                    </div>
-                                                </x-slot>
-                                            </x-modal>
+                                                        </x-slot>
+                                                    </x-modal>
 
-                                            {{-- delete  --}}
-                                            <x-modal title="Hapus Data Laporan">
-                                                <x-slot name="buttonSlot">
-                                                    <button>
-                                                        <span class="material-symbols-outlined text-red-600">
-                                                            delete
-                                                        </span>
-                                                    </button>
-                                                </x-slot>
+                                                    {{-- view invoice  --}}
 
-                                                <x-slot name="contentSlot">
-                                                    <div class="w-[400px]">
-                                                        <p class="text-sm font-medium">Apakah anda yakin akan menghapus
-                                                            data laporan dengan judul <span
-                                                                class="font-bold">{{ $report->title }}</span>?
-                                                            Data
-                                                            yang dihapus akan hilang dari list</p>
 
-                                                        <form action="{{ route('laporan.destroy', $report->id) }}"
-                                                            method="POST" class="mt-3 w-full flex items-center justify-end"
-                                                            id="deleteVisitForm">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit"
-                                                                class="bg-red-600 text-white !px-3 !py-1 rounded-md">
-                                                                <p class="text-sm truncate">Hapus</p>
-                                                        </form>
-                                                        </button>
-                                                    </div>
-                                                </x-slot>
-                                            </x-modal>
-                                        </div>
-                                    @endif
-                                @endauth
+                                                    {{-- delete  --}}
+                                                    <x-modal title="Hapus Data Laporan">
+                                                        <x-slot name="buttonSlot">
+                                                            <button
+                                                                class="flex items-center gap-2 p-1 rounded-md border border-black/10 hover:bg-gray-200 duration-200">
+                                                                <span class="material-symbols-outlined text-red-600">
+                                                                    delete
+                                                                </span>
+                                                            </button>
+                                                        </x-slot>
 
+                                                        <x-slot name="contentSlot">
+                                                            <div class="w-[400px]">
+                                                                <p class="text-sm font-medium">Apakah anda yakin akan menghapus
+                                                                    data laporan dengan judul <span
+                                                                        class="font-bold">{{ $report->title }}</span>?
+                                                                    Data
+                                                                    yang dihapus akan hilang dari list</p>
+
+                                                                <form action="{{ route('laporan.destroy', $report->id) }}"
+                                                                    method="POST"
+                                                                    class="mt-3 w-full flex items-center justify-end"
+                                                                    id="deleteVisitForm">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit"
+                                                                        class="bg-red-600 text-white !px-3 !py-1 rounded-md">
+                                                                        <p class="text-sm truncate">Hapus</p>
+                                                                </form>
+                                                                </button>
+                                                            </div>
+                                                        </x-slot>
+                                                    </x-modal>
+                                                </div>
+                                            @endif
+                                        @endauth
+                                    </x-slot>
+                                </x-dropdown>
 
                             </td>
                         </tr>
