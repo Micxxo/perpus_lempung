@@ -20,8 +20,6 @@
     }
 
     .custom-scrollbar {
-        width: 100%;
-        height: 300px;
         overflow-y: scroll;
     }
 

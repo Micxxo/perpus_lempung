@@ -552,6 +552,12 @@
                                     </div>
 
                                     <div>
+                                        <p class="text-black/50 text-xs">NISN</p>
+                                        <h1 class="text-sm" x-text="selectedLoan.member.user.nisn">
+                                        </h1>
+                                    </div>
+
+                                    <div>
                                         <p class="text-black/50 text-xs">Cover Buku</p>
                                         <div class="h-full mt-2">
                                             <img :src="`{{ asset('storage') }}/${selectedLoan.book.image}`" alt="Book Image"

@@ -1,7 +1,7 @@
 @extends('layout.main')
 @section('content')
     <section class="px-5 md:px-8 py-3 md:py-6 flex flex-col md:flex-row items-center h-full relative">
-        <div class="w-full md:w-[45%] h-full flex flex-col bg-secondary rounded-2xl pt-20 overflow-y-auto">
+        <div class="w-full md:w-[45%] h-full flex flex-col bg-secondary rounded-2xl pt-20 overflow-y-auto custom-scrollbar">
             <div class="mx-auto w-fit">
                 <img src="{{ asset('images/logo.webp') }}" alt="logo">
             </div>

@@ -1,7 +1,7 @@
 @extends('layout.dashboard')
 
 @section('section')
-    <div class="p-10 flex items-center w-full h-full">
+    <div class="px-10 py-8 flex items-center w-full h-full">
         <div class="w-[60%] h-full flex flex-col">
             <x-badge class="px-4 rounded-md">
                 <p class="font-medium">Profil Anda</p>
@@ -38,19 +38,26 @@
                     </div>
                 </div>
 
-                <div class="mt-5 w-1/2 space-y-7 flex-1 flex flex-col">
-                    <div class="flex flex-col gap-y-2">
+                <div class="mt-5 w-1/2 space-y-3 flex-1 flex flex-col">
+                    <div class="flex flex-col gap-y-1">
+                        <label for="nisn">NISN</label>
+                        <input type="text" name="nisn" class="border border-black/30 rounded-[4px] p-1"
+                            value="{{ old('nisn', $user->nisn) }}" />
+                    </div>
+
+                    <div class="flex flex-col gap-y-1">
                         <label for="username">Username</label>
                         <input type="text" name="username" class="border border-black/30 rounded-[4px] p-1"
                             value="{{ old('username', $user->username) }}" />
                     </div>
-                    <div class="flex flex-col gap-y-2">
+
+                    <div class="flex flex-col gap-y-1">
                         <label for="email">Email</label>
                         <input type="email" name="email" class="border border-black/30 rounded-[4px] p-1"
                             value="{{ old('email', $user->email) }}" />
                     </div>
 
-                    <div class="flex flex-col gap-y-2 flex-1" x-data="{ showConfirm: false }">
+                    <div class="flex flex-col gap-y-1 flex-1" x-data="{ showConfirm: false }">
                         <label for="password_confirmation">Password</label>
                         <div class="flex items-center border border-black/30 rounded-[4px]">
                             <input :type="showConfirm ? 'text' : 'password'" name="password"
@@ -63,7 +70,7 @@
                         </div>
                     </div>
 
-                    <div class="flex flex-col gap-y-2 flex-1" x-data="{ showConfirm: false }">
+                    <div class="flex flex-col gap-y-1 flex-1" x-data="{ showConfirm: false }">
                         <label for="password_confirmation">Konfirmasi Password</label>
                         <div class="flex items-center border border-black/30 rounded-[4px]">
                             <input :type="showConfirm ? 'text' : 'password'" name="password_confirmation"

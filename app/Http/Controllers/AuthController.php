@@ -25,6 +25,7 @@ class AuthController extends Controller
 
         $validated = $request->validate([
             'username' => 'required|string|max:255|unique:users,username',
+            'nisn' => 'required|string|max:255|unique:users,nisn',
             'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
         ]);
@@ -32,6 +33,7 @@ class AuthController extends Controller
 
         $user = new User();
         $user->username = $request->username;
+        $user->nisn = $request->nisn;
         $user->email = $request->email;
         $user->role_id = 1;
         $user->is_member = 0;

@@ -64,6 +64,7 @@ class UserController extends Controller
 
         $validated = $request->validate([
             'username' => 'required|string|max:255|unique:users,username',
+            'nisn' => 'required|string|max:255|unique:users,nisn',
             'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
         ]);
@@ -71,6 +72,7 @@ class UserController extends Controller
 
         $user = new User();
         $user->username = $request->username;
+        $user->nisn = $request->nisn;
         $user->email = $request->email;
         $user->role_id = 1;
         $user->is_member = 0;
@@ -109,8 +111,9 @@ class UserController extends Controller
         $userId = Auth::id();
 
         $validated = $request->validate([
-            'username' => 'nullable|string|max:255',
-            'email' => 'nullable|string|email|max:255',
+            'username' => "nullable|string|max:255|unique:users,username,{$userId}",
+            'nisn' => "nullable|string|max:255|unique:users,nisn,{$userId}",
+            'email' => 'nullable|string|email|max:255|unique:users,email,' . $userId,
             'password' => 'nullable|string|min:8|confirmed',
             'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -125,15 +128,23 @@ class UserController extends Controller
         if ($request->filled('username')) {
             $user->username = $request->username;
         }
+
+        if ($request->filled('nisn')) {
+            $user->nisn = $request->nisn;
+        }
+
         if ($request->filled('email')) {
             $user->email = $request->email;
         }
+
         if ($request->filled('password')) {
             $user->password = bcrypt($request->password);
         }
+
         if ($request->has('is_member')) {
             $user->is_member = $request->is_member;
         }
+
         if ($request->has('role_id')) {
             $user->role_id = $request->role_id;
         }

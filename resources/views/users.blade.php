@@ -17,7 +17,7 @@
                     @auth
                         @if (Auth::user()->role_id === 3)
                             <form action="{{ route('pengguna.registerUser') }}" method="POST"
-                                class="flex flex-col w-full h-[300px] space-y-3">
+                                class="flex flex-col w-full h-[300px] space-y-3" x-data="{ role: '' }">
                                 @csrf
                                 <div class="flex flex-col gap-y-3 w-full">
                                     <input type="text" placeholder="Username" name="username" required
@@ -26,7 +26,12 @@
                                     <input type="email" placeholder="Email" name="email" required
                                         class="px-1 py-2 rounded-md border border-black/30 w-full" />
 
-                                    <select name="role" id="user_role"
+                                    <template x-if="role == 1">
+                                        <input type="number" placeholder="NISN" name="nisn" required
+                                            class="px-1 py-2 rounded-md border border-black/30 w-full" />
+                                    </template>
+
+                                    <select name="role" id="user_role" x-model="role"
                                         class="px-1 py-2 rounded-md border border-black/30 w-full">
                                         <option value="">Pilih Role</option>
                                         <option value="1">Siswa</option>
@@ -70,6 +75,9 @@
                                         class="px-1 py-2 rounded-md border border-black/30 w-full" />
 
                                     <input type="email" placeholder="Email" name="email" required
+                                        class="px-1 py-2 rounded-md border border-black/30 w-full" />
+
+                                    <input type="number" placeholder="NISN" name="nisn" required
                                         class="px-1 py-2 rounded-md border border-black/30 w-full" />
 
                                     <div x-data="{ show: false }"
@@ -190,6 +198,8 @@
                                         </th>
                                         <th class="font-semibold border-r border-gray-300 text-left py-2 px-4 ">Email
                                         </th>
+                                        <th class="font-semibold border-r border-gray-300 text-left py-2 px-4 ">NISN
+                                        </th>
                                         <th class="font-semibold text-left py-2 px-4 border-r border-gray-300">Tanggal
                                             Dibuat
                                         </th>
@@ -209,6 +219,9 @@
                                                 </td>
                                                 <td class="px-4 py-3 text-left border-r border-gray-200 ">
                                                     <p>{{ $student->email }}</p>
+                                                </td>
+                                                <td class="px-4 py-3 text-left border-r border-gray-200 ">
+                                                    <p>{{ $student->nisn }}</p>
                                                 </td>
                                                 <td class="px-4 py-3 text-left border-r border-gray-200 ">
                                                     <p>{{ $student->created_at->format('d-m-Y') }}</p>

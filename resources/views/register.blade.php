@@ -1,14 +1,25 @@
 @extends('layout.auth')
 
 @section('form')
-    <form action="{{ route('auth.registerMember') }}" method="POST" class="mt-10 flex flex-col items-center gap-y-8">
+    <form action="{{ route('auth.registerMember') }}" method="POST" class="mt-10 flex flex-col items-center gap-y-8 ">
         @csrf
+
+        <div class="flex flex-col w-[80%] ">
+            <input
+                class="bg-transparent rounded-none border-b border-black w-full py-1 placeholder:text-black focus:outline-none"
+                required type="number" name="nisn" placeholder="NISN" autofocus>
+            @error('nisn')
+                <span class="text-red-600 text-left mt-2">{{ $message }}</span>
+            @enderror
+
+        </div>
+
         <div class="flex flex-col w-[80%]">
             <input
                 class="bg-transparent rounded-none border-b border-black w-full py-1 placeholder:text-black focus:outline-none"
-                required ="text" name="username" placeholder="Username" autofocus>
+                required type="text" name="username" placeholder="Username" autofocus>
             @error('username')
-                <span class="text-red-600 text-left mt-2">amba</span>
+                <span class="text-red-600 text-left mt-2">{{ $message }}</span>
             @enderror
 
         </div>
