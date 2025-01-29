@@ -195,7 +195,7 @@
                                                             <select name="loan_book_name" id="loanBookName"
                                                                 class="border py-3 px-2 rounded-md border-black/30" required>
                                                                 <option value="">Pilih Buku</option>
-                                                                @foreach ($books as $book)
+                                                                @foreach ($availableBooks as $book)
                                                                     <option value="{{ $book->id }}">{{ $book->name }}
                                                                     </option>
                                                                 @endforeach
@@ -211,24 +211,35 @@
                                                                 @endforeach
                                                             </select>
 
-                                                            <div class="grid grid-cols-2 gap-5">
+                                                            <div class="grid grid-cols-2 gap-5" x-data="{
+                                                                borrowingDate: '',
+                                                                returningDate: '',
+                                                                updateReturnDate() {
+                                                                    if (this.borrowingDate) {
+                                                                        const date = new Date(this.borrowingDate);
+                                                                        date.setDate(date.getDate() + 7);
+                                                                        this.returningDate = date.toISOString().split('T')[0];
+                                                                    }
+                                                                }
+                                                            }">
                                                                 <div class="w-full flex flex-col gap-y-1">
                                                                     <label for="borrowingDate"
-                                                                        class="text-sm text-black/80">Tanggal
-                                                                        Dipinjam</label>
+                                                                        class="text-sm text-black/80">Tanggal Dipinjam</label>
                                                                     <input type="date" id="borrowingDate"
                                                                         class="border py-3 px-2 rounded-md border-black/30"
                                                                         placeholder="Tanggal dipinjam" name="borrowing_date"
-                                                                        oninput="validateLoanDates()">
+                                                                        x-model="borrowingDate" x-on:change="updateReturnDate()"
+                                                                        x-bind:value="formatCreatedAtOnUpdate(selectedLoan.created_at)"
+                                                                        required>
                                                                 </div>
                                                                 <div class="w-full flex flex-col gap-y-1">
                                                                     <label for="returningDate"
-                                                                        class="text-sm text-black/80">Tanggal
-                                                                        Dikembalikan</label>
+                                                                        class="text-sm text-black/80">Tanggal Dikembalikan</label>
                                                                     <input type="date" id="returningDate"
                                                                         class="border py-3 px-2 rounded-md border-black/30"
                                                                         placeholder="Tanggal dikembalikan" name="returning_date"
-                                                                        oninput="validateLoanDates()">
+                                                                        readonly x-model="returningDate"
+                                                                        x-bind:value="selectedLoan.return_date" required>
                                                                 </div>
                                                             </div>
 
@@ -262,7 +273,7 @@
                         </x-book-error-state>
                     </div>
                 @else
-                    <div x-data="{ selectedLoan: null }" x-init="selectedLoan = @js($firstLoan)" class="mt-5 flex-1 flex w-full overflow-y-auto">
+                    <div x-data="{ selectedLoan: null, allBooks: null }" x-init="selectedLoan = @js($firstLoan), allBooks = @js($books)" class="mt-5 flex-1 flex w-full overflow-y-auto">
                         <div class="w-[40%] h-full flex flex-col ">
                             <div class="flex-1 space-y-5 overflow-y-auto custom-scrollbar pr-3">
                                 @foreach ($loans as $loan)
@@ -304,7 +315,7 @@
 
                                     <div>
                                         <p class="text-xs text-black/50">Dari</p>
-                                        <h1 class="text-sm text-black" x-text="formatLoanDate(selectedLoan.created_at)">
+                                        <h1 class="text-sm text-black" x-text="formatLoanDate(selectedLoan.borrowing_date)">
                                         </h1>
                                     </div>
                                     <div>
@@ -366,13 +377,16 @@
                                                                 <div class="flex flex-col flex-1 w-full gap-y-3">
                                                                     <select name="loan_book_name" id="loanBookName"
                                                                         class="border py-3 px-2 rounded-md border-black/30"
-                                                                        x-bind:value="selectedLoan.book_id" required>
+                                                                        x-model="selectedLoan.book_id" required>
                                                                         <option value="">Pilih Buku</option>
-                                                                        @foreach ($books as $book)
-                                                                            <option value="{{ $book->id }}">
-                                                                                {{ $book->name }}</option>
-                                                                        @endforeach
+                                                                        <template
+                                                                            x-for="book in allBooks.filter(book => book.id === selectedLoan.book_id || book.coppies > 0)"
+                                                                            :key="book.id">
+                                                                            <option :value="book.id" x-text="book.name">
+                                                                            </option>
+                                                                        </template>
                                                                     </select>
+
 
                                                                     <select name="loan_member" id="loanMember"
                                                                         class="border py-3 px-2 rounded-md border-black/30"
@@ -394,7 +408,7 @@
                                                                                 placeholder="Tanggal dipinjam"
                                                                                 name="borrowing_date"
                                                                                 x-bind:value="formatCreatedAtOnUpdate(selectedLoan
-                                                                                    .created_at)"
+                                                                                    .borrowing_date)"
                                                                                 required>
 
                                                                         </div>
@@ -404,7 +418,7 @@
                                                                                 Dikembalikan</label>
                                                                             <input type="date" id="returningDate"
                                                                                 class="border py-3 px-2 rounded-md border-black/30"
-                                                                                placeholder="Tanggal dikembalikan"
+                                                                                placeholder="Tanggal dikembalikan" readonly
                                                                                 name="returning_date"
                                                                                 x-bind:value="selectedLoan.return_date" required>
                                                                         </div>
@@ -421,7 +435,7 @@
                                                                             Dipinjam
                                                                         </option>
                                                                         <option value="late">
-                                                                            Telat
+                                                                            Terlambat
                                                                         </option>
                                                                         <option value="deadline">
                                                                             Deadline

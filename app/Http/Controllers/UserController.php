@@ -89,12 +89,17 @@ class UserController extends Controller
         $validated = $request->validate([
             'username' => 'required|string|max:255|unique:users,username',
             'email' => 'required|string|email|max:255|unique:users,email',
+            'nisn' => 'nullable|string|max:255|unique:users,nisn',
             'role' => 'required|integer',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-
         $user = new User();
+
+        if ($request->nisn) {
+            $user->nisn = $request->nisn;
+        }
+
         $user->username = $request->username;
         $user->email = $request->email;
         $user->role_id = $request->role;

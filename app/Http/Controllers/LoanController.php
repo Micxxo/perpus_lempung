@@ -67,12 +67,13 @@ class LoanController extends Controller
             })
             ->first();
 
-        $books = Book::where('status', '!=', 'out-stock')->get();
+        $books = Book::all();
+        $availableBooks = Book::where('status', '!=', 'out-stock')->get();
 
         $members = Member::with(['user:id,username'])->get();
 
 
-        return view('loan',  compact('loans', 'bookTitleSearch', 'loanStatus', 'loanCreatedAt', 'firstLoan', 'books', 'members'));
+        return view('loan',  compact('loans', 'bookTitleSearch', 'loanStatus', 'loanCreatedAt', 'firstLoan', 'books', 'members', 'availableBooks'));
     }
 
     public function store(Request $request)
@@ -89,7 +90,7 @@ class LoanController extends Controller
             $loan->book_id = $request->loan_book_name;
             $loan->member_id = $request->loan_member;
             $loan->return_date = $request->returning_date;
-            $loan->created_at = $request->borrowing_date;
+            $loan->borrowing_date = $request->borrowing_date;
             $loan->description = $request->loan_description;
             $loan->save();
 

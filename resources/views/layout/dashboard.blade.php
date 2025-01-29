@@ -9,7 +9,10 @@
             </div>
         </div>
 
-        <div x-data="{ showSuccess: {{ session('success') ? 'true' : 'false' }}, showErrors: {{ $errors->any() ? 'true' : 'false' }} }" x-init="setTimeout(() => {
+        <div x-data="{
+            showSuccess: {{ session('success') ? 'true' : 'false' }},
+            showErrors: {{ $errors->any() || session('error') ? 'true' : 'false' }}
+        }" x-init="setTimeout(() => {
             showSuccess = false;
             showErrors = false;
         }, 2000)">
@@ -18,7 +21,10 @@
             </div>
 
             <div x-cloak x-show="showErrors" class="absolute bottom-10 right-14 flex flex-col gap-y-5">
-                @foreach ($errors->all() as $index => $error)
+                @if (session('error'))
+                    <x-error-alert>{{ session('error') }}</x-error-alert>
+                @endif
+                @foreach ($errors->all() as $error)
                     <x-error-alert>{{ $error }}</x-error-alert>
                 @endforeach
             </div>

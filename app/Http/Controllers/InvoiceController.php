@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fine;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -9,7 +10,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class InvoiceController extends Controller
 {
-    public function store(Request $request, $reportId)
+    public function store(Request $request, $fineId)
     {
         $request->validate([
             'description' => 'nullable|string',
@@ -17,10 +18,19 @@ class InvoiceController extends Controller
             'total_paid' => 'required|numeric|min:0',
         ]);
 
+        // Check if total_paid is less than total_price
+        if ($request->input('total_paid') < $request->input('total_price')) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Total pembayaran tidak boleh kurang dari total harga!');
+        }
+
         try {
             $invoice = new Invoice();
+            $fine = Fine::findOrFail($fineId);
+
             $transactionCount = Invoice::count() + 1;
-            $invoice->fine_id = $reportId;
+            $invoice->fine_id = $fineId;
             $invoice->description = $request->input('description');
             $invoice->total_price = $request->input('total_price');
             $invoice->total_paid = $request->input('total_paid');
@@ -29,8 +39,10 @@ class InvoiceController extends Controller
 
             $invoice->paymentId = 'INV' . strtoupper(uniqid() . $transactionCount);
 
-            $invoice->save();
-
+            if ($invoice->save()) {
+                $fine->is_done = true;
+                $fine->save();
+            }
             return redirect()->back()->with('success', 'Invoice berhasil dibuat!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan saat membuat invoice: ' . $e->getMessage());

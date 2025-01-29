@@ -60,6 +60,7 @@
         <p>Invoice ID: {{ $invoice->paymentId }}</p>
         <p>Tanggal: {{ \Carbon\Carbon::parse($invoice->created_at)->translatedFormat('d F Y') }}</p>
         <p>Nama Member: {{ $invoice->fine->loan->member->user->username }}</p>
+        <p>NISN: {{ $invoice->fine->loan->member->user->nisn }}</p>
     </section>
 
     <table class="table table-bordered invoice-details">

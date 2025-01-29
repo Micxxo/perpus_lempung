@@ -32,7 +32,7 @@ class Loan extends Model
 
     public function getFormattedDateAttribute()
     {
-        return Carbon::parse($this->created_at)->format('d - m - Y');
+        return Carbon::parse($this->borrowing_date)->format('d - m - Y');
     }
 
     public function getFormattedReturnDateAttribute()

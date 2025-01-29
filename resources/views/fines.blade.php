@@ -323,24 +323,66 @@
                                                                 method="POST" class="h-full flex flex-col gap-y-3">
                                                                 @csrf
 
-                                                                <div class="flex flex-col gap-y-1">
+                                                                <div class="flex flex-col gap-y-1"
+                                                                    x-data="{
+                                                                        numericValue: '',
+                                                                        formattedValue: '',
+                                                                        formatIDR(value) {
+                                                                            if (!value) return '';
+                                                                            return new Intl.NumberFormat('id-ID', {
+                                                                                style: 'currency',
+                                                                                currency: 'IDR',
+                                                                                minimumFractionDigits: 0,
+                                                                                maximumFractionDigits: 0
+                                                                            }).format(value);
+                                                                        }
+                                                                    }">
                                                                     <label for="total_price"
                                                                         class="text-sm text-gray-500 font-normal">Total
                                                                         harga</label>
-                                                                    <input type="number" id="total_price"
-                                                                        class="rounded-md border border-black/30 px-1 py-2"
-                                                                        required name="total_price"
-                                                                        placeholder="Total Harga" />
+                                                                    <div class="relative">
+                                                                        <input type="text" x-model="formattedValue"
+                                                                            x-on:input="
+                                                                                const numbers = $event.target.value.replace(/[^0-9]/g, '');
+                                                                                numericValue = numbers;
+                                                                                formattedValue = formatIDR(numbers);
+                                                                            "
+                                                                            class="rounded-md border border-black/30 px-1 py-2 w-full"
+                                                                            placeholder="Total Harga" />
+                                                                        <input type="hidden" name="total_price"
+                                                                            x-model="numericValue" required />
+                                                                    </div>
                                                                 </div>
 
-                                                                <div class="flex flex-col gap-y-1">
+                                                                <div class="flex flex-col gap-y-1"
+                                                                    x-data="{
+                                                                        numericValue: '',
+                                                                        formattedValue: '',
+                                                                        formatIDR(value) {
+                                                                            if (!value) return '';
+                                                                            return new Intl.NumberFormat('id-ID', {
+                                                                                style: 'currency',
+                                                                                currency: 'IDR',
+                                                                                minimumFractionDigits: 0,
+                                                                                maximumFractionDigits: 0
+                                                                            }).format(value);
+                                                                        }
+                                                                    }">
                                                                     <label for="total_paid"
                                                                         class="text-sm text-gray-500 font-normal">Total
                                                                         dibayar</label>
-                                                                    <input type="number" id="total_paid"
-                                                                        class="rounded-md border border-black/30 px-1 py-2"
-                                                                        required name="total_paid"
-                                                                        placeholder="Total Dibayar" />
+                                                                    <div class="relative">
+                                                                        <input type="text" x-model="formattedValue"
+                                                                            x-on:input="
+                                                                                const numbers = $event.target.value.replace(/[^0-9]/g, '');
+                                                                                numericValue = numbers;
+                                                                                formattedValue = formatIDR(numbers);
+                                                                            "
+                                                                            class="rounded-md border border-black/30 px-1 py-2 w-full"
+                                                                            placeholder="Total Dibayar" />
+                                                                        <input type="hidden" name="total_paid"
+                                                                            x-model="numericValue" required />
+                                                                    </div>
                                                                 </div>
 
                                                                 <div class="flex flex-col flex-1 gap-y-1">
