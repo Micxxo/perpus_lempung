@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
             'username' => 'student',
             'email' => 'student@example.com',
             'is_member' => 0,
+            'nisn' => '00867547',
             'role_id' => 1,
             'profile' => '',
             'password' => bcrypt('student123'),

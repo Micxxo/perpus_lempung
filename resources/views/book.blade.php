@@ -75,7 +75,8 @@
                 @if (Auth::user()->role_id === 2)
                     <x-modal title="Tambah Buku">
                         <x-slot name="buttonSlot">
-                            <button type="button" class="px-5 py-1.5 bg-accent text-white font-semibold rounded-md">Tambah
+                            <button type="button"
+                                class="px-5 py-1.5 bg-accent text-white font-semibold rounded-md text-sm">Tambah
                                 Buku</button>
                         </x-slot>
 

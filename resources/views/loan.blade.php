@@ -230,6 +230,7 @@
                                                                         placeholder="Tanggal dipinjam" name="borrowing_date"
                                                                         x-model="borrowingDate" x-on:change="updateReturnDate()"
                                                                         x-bind:value="formatCreatedAtOnUpdate(selectedLoan.created_at)"
+                                                                        x-bind:min="new Date().toISOString().split('T')[0]"
                                                                         required>
                                                                 </div>
                                                                 <div class="w-full flex flex-col gap-y-1">
@@ -242,6 +243,7 @@
                                                                         x-bind:value="selectedLoan.return_date" required>
                                                                 </div>
                                                             </div>
+
 
                                                             <textarea name="loan_description" id="loanDesc" placeholder="Deskripsi"
                                                                 class="flex-1 border py-3 px-2 rounded-md border-black/30"></textarea>
@@ -296,6 +298,11 @@
                                             <div>
                                                 <p class="text-xs text-black/50">Sampai</p>
                                                 <h1 class="text-sm text-black">{{ $loan->formatted_return_date }}</h1>
+                                            </div>
+                                            <div>
+                                                <p class="text-black/50 text-xs">Peminjam</p>
+                                                <h1 class="text-black text-sm truncate">{{ $loan->member->user->username }}
+                                                </h1>
                                             </div>
                                         </div>
                                     </div>
@@ -409,6 +416,7 @@
                                                                                 name="borrowing_date"
                                                                                 x-bind:value="formatCreatedAtOnUpdate(selectedLoan
                                                                                     .borrowing_date)"
+                                                                                x-bind:min="new Date().toISOString().split('T')[0]"
                                                                                 required>
 
                                                                         </div>
