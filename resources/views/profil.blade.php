@@ -39,11 +39,13 @@
                 </div>
 
                 <div class="mt-5 w-1/2 space-y-3 flex-1 flex flex-col">
-                    <div class="flex flex-col gap-y-1">
-                        <label for="nisn">NISN</label>
-                        <input type="text" name="nisn" class="border border-black/30 rounded-[4px] p-1"
-                            value="{{ old('nisn', $user->nisn) }}" />
-                    </div>
+                    @if ($user->role_id === 1)
+                        <div class="flex flex-col gap-y-1">
+                            <label for="nisn">NISN</label>
+                            <input type="text" name="nisn" class="border border-black/30 rounded-[4px] p-1"
+                                value="{{ old('nisn', $user->nisn) }}" />
+                        </div>
+                    @endif
 
                     <div class="flex flex-col gap-y-1">
                         <label for="username">Username</label>
