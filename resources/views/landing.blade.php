@@ -41,12 +41,9 @@
                 </div>
                 <div class="flex-1 mt-0 md:mt-5">
                     <h1 class="font-medium text-2xl">Koleksi Perpustakaan</h1>
-                    <p class="mt-1 text-base">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu laoreet
-                        magna,
-                        a
-                        porttitor ligula.
-                        Nullam semper augue vel nisi venenatis tincidunt. Sed varius metus vel nulla congue, at posuere eros
-                        euismod</p>
+                    <p class="mt-1 text-base">Temukan judul-judul menarik yang sesuai dengan minat dan kebutuhan Anda, serta
+                        manfaatkan fasilitas pencarian untuk kemudahan akses. Selamat membaca dan menjelajahi dunia
+                        literasi!</p>
                 </div>
             </div>
 
@@ -80,9 +77,10 @@
                                     </div>
                                     <div class="mt-4">
                                         <h1 x-text="book.name" class="font-medium text-xl"></h1>
-                                        <p x-text="book.authors" class="text-sm text-black/50"></p>
+                                        <p x-text="book.authors" class="text-sm text-black/50 truncate w-[120px]"></p>
                                         <x-badge class="mt-2 !bg-accent !text-white px-5 !py-0.8 !rounded-xl">
-                                            <p x-text="book.status" variant="primary" class="capitalize text-sm"></p>
+                                            <p x-text="book.status === 'available' ? 'Tersedia' : (book.status === 'out-stock' ? 'Tidak ada stok' : book.status)"
+                                                variant="primary" class="capitalize text-sm"></p>
                                         </x-badge>
                                     </div>
                                 </div>
