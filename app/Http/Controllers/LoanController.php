@@ -133,7 +133,7 @@ class LoanController extends Controller
             $loan->member_id = $request->loan_member;
             $loan->status = $request->loan_status;
             $loan->return_date = $request->returning_date;
-            $loan->created_at = $request->borrowing_date;
+            $loan->borrowing_date = $request->borrowing_date;
             $loan->description = $request->loan_description;
 
             $loan->save();

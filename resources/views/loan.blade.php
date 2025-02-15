@@ -405,32 +405,48 @@
                                                                         @endforeach
                                                                     </select>
 
-                                                                    <div class="grid grid-cols-2 gap-5">
-                                                                        <div class="w-full flex flex-col gap-y-1">
-                                                                            <label for="borrowingDate"
-                                                                                class="text-sm text-black/80">Tanggal
-                                                                                Dipinjam</label>
-                                                                            <input type="date" id="borrowingDate"
-                                                                                class="border py-3 px-2 rounded-md border-black/30"
-                                                                                placeholder="Tanggal dipinjam"
-                                                                                name="borrowing_date"
-                                                                                x-bind:value="formatCreatedAtOnUpdate(selectedLoan
-                                                                                    .borrowing_date)"
-                                                                                x-bind:min="new Date().toISOString().split('T')[0]"
-                                                                                required>
 
-                                                                        </div>
-                                                                        <div class="w-full flex flex-col gap-y-1">
-                                                                            <label for="returningDate"
-                                                                                class="text-sm text-black/80">Tanggal
-                                                                                Dikembalikan</label>
-                                                                            <input type="date" id="returningDate"
-                                                                                class="border py-3 px-2 rounded-md border-black/30"
-                                                                                placeholder="Tanggal dikembalikan" readonly
-                                                                                name="returning_date"
-                                                                                x-bind:value="selectedLoan.return_date" required>
+                                                                    <div x-data="{
+                                                                        borrowing_date: '',
+                                                                        returning_date: '',
+                                                                        init() {
+                                                                            this.borrowing_date = this.formatDate(selectedLoan.borrowing_date);
+                                                                            this.returning_date = this.formatDate(selectedLoan.return_date);
+                                                                        },
+                                                                        updateReturningDate() {
+                                                                            this.returning_date = this.formatDate(new Date(new Date(this.borrowing_date).setDate(new Date(this.borrowing_date).getDate() + 7)));
+                                                                        },
+                                                                        formatDate(date) {
+                                                                            if (!date) return '';
+                                                                            const d = new Date(date);
+                                                                            return d.toISOString().split('T')[0];
+                                                                        }
+                                                                    }">
+                                                                        <div class="grid grid-cols-2 gap-5">
+                                                                            <div class="w-full flex flex-col gap-y-1">
+                                                                                <label for="borrowingDate"
+                                                                                    class="text-sm text-black/80">Tanggal
+                                                                                    Dipinjam</label>
+                                                                                <input type="date" id="borrowingDate"
+                                                                                    class="border py-3 px-2 rounded-md border-black/30"
+                                                                                    placeholder="Tanggal dipinjam"
+                                                                                    name="borrowing_date" x-model="borrowing_date"
+                                                                                    x-on:change="updateReturningDate()" required>
+                                                                            </div>
+                                                                            <div class="w-full flex flex-col gap-y-1">
+                                                                                <label for="returningDate"
+                                                                                    class="text-sm text-black/80">Tanggal
+                                                                                    Dikembalikan</label>
+                                                                                <input type="date" id="returningDate"
+                                                                                    class="border py-3 px-2 rounded-md border-black/30"
+                                                                                    placeholder="Tanggal dikembalikan" readonly
+                                                                                    name="returning_date" x-model="returning_date"
+                                                                                    required>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
+
+
 
                                                                     <select name="loan_status" id="loanStatus"
                                                                         class="border py-3 px-2 rounded-md border-black/30"
