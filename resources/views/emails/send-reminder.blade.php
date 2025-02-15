@@ -37,7 +37,7 @@
         <!-- Footer -->
         <div class="bg-gray-100 text-center py-4">
             <p class="text-gray-500 text-sm">
-                &copy; 2024 Perpustakaan Lempuing. Semua hak cipta dilindungi.
+                &copy; 2025 Perpustakaan Lempuing. Semua hak cipta dilindungi.
             </p>
         </div>
     </div>
