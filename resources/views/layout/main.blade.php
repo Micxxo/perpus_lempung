@@ -57,7 +57,7 @@
 </style>
 
 <body class="font-instrument-sans h-screen overflow-x-hidden">
-    <main class="h-screen max-w-screen-2xl mx-auto bg-background">
+    <main class="h-screen w-full mx-auto bg-background">
         @yield('content')
     </main>
 </body>
