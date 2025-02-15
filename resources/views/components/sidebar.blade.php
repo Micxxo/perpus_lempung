@@ -131,7 +131,7 @@
         <form id="logoutForm" action="{{ route('logout') }}" method="POST">
             @csrf
             <button type="submit" class="flex items-center gap-2 rounded-lg"
-                :class="minimize ? 'py-3 flex items-center justify-center' : 'px-4 py-3'">
+                :class="minimize ? 'py-3 px-4 flex items-center justify-center' : 'px-4 py-3'">
                 <span class="material-symbols-outlined text-red-600">
                     logout
                 </span>
