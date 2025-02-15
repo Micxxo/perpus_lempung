@@ -163,7 +163,7 @@
                             </div>
                             <div class="flex-1">
                                 <h1 class="font-medium text-xl">{{ $book->name }}</h1>
-                                <p class="text-sm text-black/50">{{ $book->authors }}</p>
+                                <p class="text-sm text-black/50 truncate w-[120px]">{{ $book->authors }}</p>
                                 <div class="mt-3 flex flex-col gap-y-2">
                                     <div class="flex items-center gap-3">
                                         <x-badge :class="($book->status === 'out-stock') ? 'bg-red-600 text-white !px-3 !py-1 !rounded-xl' : '!bg-accent text-white !px-3 !py-1 !rounded-xl'">
@@ -195,8 +195,9 @@
                                                     <div class="h-full w-[2px] bg-gray-200"></div>
                                                     <div class="flex-1 space-y-2">
                                                         <h1 class="text-base font-semibold">{{ $book->name }}</h1>
-                                                        <p class="text-sm">
-                                                            {{ $book->description ? $book->description : '-' }}</p>
+                                                        <p class="font-bold text-sm">Deskripsi: <span class="font-medium">
+                                                                {{ $book->description ? $book->description : '-' }}</span>
+                                                        </p>
                                                         <p class="font-bold text-sm">Author: <span
                                                                 class="font-medium">{{ $book->authors }}</span></p>
                                                         <p class="font-bold text-sm">Genre: <span
