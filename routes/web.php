@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\FineController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LoanController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisitController;
 use App\Mail\MailBookReturnReminder;
 use App\Models\Book;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -25,13 +27,19 @@ Route::get('/', function () {
 // AUTH 
 Route::get('/login', [AuthController::class, 'showLoginPage'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+
 Route::get('/register', [AuthController::class, 'showRegisterPage'])->name('register');
-Route::post('/register', [AuthController::class, 'registerMember'])->name('auth.registerMember');
+Route::post('/register', [AuthController::class, 'registerStudent'])->name('auth.registerStudent');
+
+Route::get('/email/verify', [EmailVerificationController::class, 'showVerifyPage'])->middleware('auth')->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'emailVerificationVerify'])->middleware(['auth', 'signed'])->name('verification.verify');
+Route::post('/email/verification-notification', [EmailVerificationController::class, 'resendEmail'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/buku', [BookController::class, 'index'])->name('buku');
     Route::post('/buku', [BookController::class, 'store'])->name('buku.store');

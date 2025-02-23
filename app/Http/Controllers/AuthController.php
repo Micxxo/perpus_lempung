@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,7 +21,7 @@ class AuthController extends Controller
 
 
 
-    function registerMember(Request $request)
+    function registerStudent(Request $request)
     {
 
         $validated = $request->validate([
@@ -40,7 +41,10 @@ class AuthController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
-        return redirect()->route('login')->with('email', $request->email)->with('success', 'Registrasi berhasil, silakan login.');
+        Auth::login($user);
+        event(new Registered($user));
+
+        return redirect('/email/verify');
     }
 
     public function login(Request $request)

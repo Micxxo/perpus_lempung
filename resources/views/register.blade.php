@@ -1,7 +1,7 @@
 @extends('layout.auth')
 
 @section('form')
-    <form action="{{ route('auth.registerMember') }}" method="POST" class="mt-10 flex flex-col items-center gap-y-8 ">
+    <form action="{{ route('auth.registerStudent') }}" method="POST" class="mt-10 flex flex-col items-center gap-y-8 ">
         @csrf
 
         <div class="flex flex-col w-[80%] ">
@@ -65,3 +65,21 @@
         <x-primary-button type="submit" class="w-[80%] py-3 md:py-5 rounded-full text-lg">Register</x-primary-button>
     </form>
 @endsection
+
+<script>
+    let isFormDirty = false;
+
+    document.addEventListener("input", () => {
+        isFormDirty = true;
+    });
+
+    window.addEventListener("beforeunload", function(event) {
+        if (isFormDirty) {
+            event.preventDefault();
+        }
+    });
+
+    document.addEventListener("submit", () => {
+        isFormDirty = false;
+    });
+</script>

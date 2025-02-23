@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -20,6 +21,7 @@ class UserSeeder extends Seeder
             'role_id' => 1,
             'profile' => '',
             'password' => bcrypt('student123'),
+            'email_verified_at' => Carbon::now(),
         ]);
 
         User::create([
@@ -29,6 +31,7 @@ class UserSeeder extends Seeder
             'role_id' => 2,
             'profile' => '',
             'password' => bcrypt('manager123'),
+            'email_verified_at' => Carbon::now(),
         ]);
 
         User::create([
@@ -38,6 +41,7 @@ class UserSeeder extends Seeder
             'role_id' => 3,
             'profile' => '',
             'password' => bcrypt('supervisor123'),
+            'email_verified_at' => Carbon::now(),
         ]);
     }
 }
